@@ -1,0 +1,2788 @@
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0">
+<meta name="theme-color" content="#1e3a5f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="GLP Obras">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="data:application/json;charset=utf-8,{%22name%22:%22GLP%20Control%20de%20Obras%22,%22short_name%22:%22GLP%20Obras%22,%22start_url%22:%22.%22,%22display%22:%22standalone%22,%22background_color%22:%22%231e3a5f%22,%22theme_color%22:%22%231e3a5f%22,%22icons%22:[{%22src%22:%22data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='24' fill='%231e3a5f'/%3E%3Ctext x='96' y='130' font-family='Arial' font-size='90' font-weight='bold' fill='white' text-anchor='middle'%3EG%3C/text%3E%3C/svg%3E%22,%22sizes%22:%22192x192%22,%22type%22:%22image/svg+xml%22}]}">
+<title>GLP · Control de Obras</title>
+<style>
+:root{--primary:#1e3a5f;--primary-lt:#2c5282;--green:#276749;--green-bg:#f0fff4;--red:#c53030;--red-bg:#fff5f5;--orange:#c05621;--orange-bg:#fffaf0;--gold:#b7791f;--gold-bg:#fffff0;--purple:#553c9a;--purple-bg:#faf5ff;--gray-50:#f9fafb;--gray-100:#f3f4f6;--gray-200:#e5e7eb;--gray-400:#9ca3af;--gray-600:#4b5563;--gray-700:#374151;--gray-800:#1f2937;--sh:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.08);--sh-md:0 4px 6px rgba(0,0,0,.1);--r:8px;--r-sm:4px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--gray-100);color:var(--gray-800);min-height:100vh}
+#login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(135deg,var(--primary) 0%,var(--primary-lt) 100%)}
+.lcard{background:white;border-radius:16px;padding:40px;width:100%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.llogo{text-align:center;margin-bottom:28px}
+.lbadge{display:inline-block;background:var(--primary);color:white;font-size:30px;font-weight:800;padding:10px 22px;border-radius:12px;letter-spacing:2px}
+.ltitle{color:var(--primary);font-size:13px;font-weight:500;margin-top:10px;letter-spacing:.5px}
+.lsub{color:var(--gray-400);font-size:11px;margin-top:4px}
+.fg{margin-bottom:18px}
+.fg label{display:block;font-size:11px;font-weight:600;color:var(--gray-600);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
+.fg input{width:100%;padding:11px 14px;border:1.5px solid var(--gray-200);border-radius:var(--r);font-size:15px;color:var(--gray-800);transition:border-color .2s}
+.fg input:focus{outline:none;border-color:var(--primary)}
+.btn-login{width:100%;padding:13px;background:var(--primary);color:white;border:none;border-radius:var(--r);font-size:16px;font-weight:600;cursor:pointer}
+.btn-login:hover{background:var(--primary-lt)}
+.lerr{background:#fed7d7;color:#742a2a;padding:10px 14px;border-radius:var(--r-sm);font-size:13px;margin-bottom:14px;display:none}
+#app{display:none;min-height:100vh;flex-direction:column}
+.aph{background:var(--primary);color:white;padding:0 20px;height:58px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;box-shadow:var(--sh-md)}
+.aph-l{display:flex;align-items:center;gap:14px}
+.aph-logo{font-size:22px;font-weight:800;letter-spacing:1.5px}
+.aph-sep{opacity:.3;font-size:18px}
+.aph-title{font-size:12px;opacity:.65;letter-spacing:.5px}
+.aph-r{display:flex;align-items:center;gap:10px}
+.ubadge{background:rgba(255,255,255,.15);padding:5px 11px;border-radius:20px;font-size:12px;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hbtn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:white;padding:7px 13px;border-radius:var(--r-sm);font-size:12px;cursor:pointer;display:flex;align-items:center;gap:5px;transition:background .2s;white-space:nowrap}
+.hbtn:hover{background:rgba(255,255,255,.2)}
+.hbtn.accent{background:rgba(255,220,0,.15);border-color:rgba(255,220,0,.4)}
+#excel-input{display:none}
+.tabbar{background:white;border-bottom:1px solid var(--gray-200);overflow-x:auto;display:flex;padding:0 16px;position:sticky;top:58px;z-index:100;box-shadow:var(--sh);-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.tabbar::-webkit-scrollbar{height:0}
+.tbtn{padding:13px 16px;font-size:13px;font-weight:500;color:var(--gray-600);border:none;background:none;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:all .2s;flex-shrink:0}
+.tbtn:hover{color:var(--primary)}
+.tbtn.active{color:var(--primary);border-bottom-color:var(--primary);font-weight:600}
+.tab-content{display:none;padding:20px;max-width:1440px;margin:0 auto;width:100%}
+.tab-content.active{display:block}
+.kpi4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:14px}
+.kcard{background:white;border-radius:var(--r);padding:18px 20px;box-shadow:var(--sh);border-left:4px solid var(--primary)}
+.kcard.green{border-left-color:var(--green)}.kcard.green .kval{color:var(--green)}
+.kcard.orange{border-left-color:var(--orange)}.kcard.orange .kval{color:var(--orange)}
+.kcard.red{border-left-color:var(--red)}.kcard.red .kval{color:var(--red)}
+.kcard.purple{border-left-color:var(--purple)}.kcard.purple .kval{color:var(--purple)}
+.kcard.gold{border-left-color:var(--gold)}.kcard.gold .kval{color:var(--gold)}
+.klbl{font-size:10px;font-weight:600;color:var(--gray-400);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
+.kval{font-size:26px;font-weight:700;color:var(--primary);line-height:1}
+.ksub{font-size:11px;color:var(--gray-400);margin-top:3px}
+.sbar{background:white;border-radius:var(--r);padding:12px 20px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px;box-shadow:var(--sh)}
+.sitem{text-align:center;padding:4px 0}
+.sval{font-size:15px;font-weight:700;color:var(--gray-800)}
+.slbl{font-size:10px;color:var(--gray-400);margin-top:2px}
+.twrap{background:white;border-radius:var(--r);box-shadow:var(--sh);overflow:hidden;margin-bottom:16px}
+.thead{padding:14px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--gray-100);flex-wrap:wrap;gap:8px}
+.ttitle{font-size:14px;font-weight:600;color:var(--gray-700)}
+.tsearch{padding:7px 12px;border:1.5px solid var(--gray-200);border-radius:var(--r-sm);font-size:13px;width:220px}
+.tsearch:focus{outline:none;border-color:var(--primary)}
+table{width:100%;border-collapse:collapse;font-size:12px}
+thead th{background:var(--gray-50);padding:9px 10px;text-align:left;font-size:10px;font-weight:600;color:var(--gray-400);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--gray-200);cursor:pointer;white-space:nowrap;user-select:none}
+thead th:hover{background:var(--gray-100);color:var(--primary)}
+thead th.sa::after{content:" ▲"}thead th.sd::after{content:" ▼"}
+tbody tr{border-bottom:1px solid var(--gray-100);transition:background .1s}
+tbody tr:hover{background:var(--gray-50)}
+tbody td{padding:9px 10px}
+.tr{text-align:right}
+.badge{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:600;white-space:nowrap}
+.b-gray{background:var(--gray-100);color:var(--gray-600)}
+.b-blue{background:#ebf8ff;color:#2b6cb0}
+.b-green{background:var(--green-bg);color:var(--green)}
+.pbar-w{display:flex;align-items:center;gap:6px}
+.pbar{flex:1;height:5px;background:var(--gray-100);border-radius:3px;overflow:hidden;min-width:50px}
+.pfill{height:100%;border-radius:3px;background:var(--primary)}
+.pfill.g{background:var(--green)}.pfill.o{background:var(--orange)}
+.ppct{font-size:11px;font-weight:600;color:var(--gray-700);min-width:36px;text-align:right}
+.co-hero{background:linear-gradient(135deg,var(--primary) 0%,var(--primary-lt) 100%);color:white;border-radius:var(--r);padding:18px 22px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.co-hero h2{font-size:18px;font-weight:700}
+.co-hero p{font-size:12px;opacity:.7;margin-top:3px}
+.co-upd-btn{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.35);color:white;padding:8px 16px;border-radius:var(--r-sm);font-size:13px;font-weight:600;cursor:pointer;transition:background .2s;white-space:nowrap}
+.co-upd-btn:hover{background:rgba(255,255,255,.25)}
+.co-layout{display:grid;grid-template-columns:1fr 250px;gap:14px;margin-bottom:14px}
+.sidebar{display:flex;flex-direction:column;gap:12px}
+.acard{background:white;border-radius:var(--r);padding:14px 16px;box-shadow:var(--sh)}
+.acard.green{border-left:4px solid var(--green)}.acard.green .aval{color:var(--green)}
+.acard.red{border-left:4px solid var(--red)}.acard.red .aval{color:var(--red)}
+.albl{font-size:10px;font-weight:600;color:var(--gray-400);text-transform:uppercase;letter-spacing:.8px}
+.aval{font-size:22px;font-weight:700;margin-top:3px}
+.proj-mini h4{font-size:10px;font-weight:600;color:var(--gray-400);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px}
+.pm-item{display:flex;align-items:center;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--gray-100);gap:6px}
+.pm-item:last-child{border-bottom:none}
+.pm-name{font-size:11px;color:var(--gray-700);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pm-pct{font-size:11px;font-weight:700;color:var(--primary);flex-shrink:0}
+.coord-info{background:white;border-radius:var(--r);padding:12px 16px;box-shadow:var(--sh);border-left:4px solid var(--gold);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.coord-lbl{font-size:10px;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:.8px}
+.coord-name{font-size:13px;font-weight:600;color:var(--gray-800);margin-top:1px}
+.coord-date{font-size:11px;color:var(--gray-400)}
+.coord-proj-chip{background:var(--gold-bg);border:1px solid #f6e05e;padding:3px 8px;border-radius:4px;font-size:11px;color:var(--gold)}
+.upd-panel{background:white;border-radius:var(--r);box-shadow:var(--sh);margin-bottom:14px;border-left:4px solid var(--gold);overflow:hidden}
+.upd-panel-hdr{background:var(--gold-bg);padding:10px 16px;font-size:11px;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:.8px;border-bottom:1px solid #f6e05e}
+.upd-proj-row{padding:10px 16px;border-bottom:1px solid var(--gray-100);display:flex;align-items:flex-start;gap:14px;flex-wrap:wrap}
+.upd-proj-row:last-child{border-bottom:none}
+.upd-proj-name{font-size:13px;font-weight:600;color:var(--primary);min-width:200px;flex:1}
+.upd-chips{display:flex;gap:6px;flex-wrap:wrap;align-items:center;flex:2}
+.upd-chip{padding:3px 8px;border-radius:4px;font-size:11px;font-weight:600;background:var(--gray-100);color:var(--gray-700)}
+.upd-chip.risk{background:var(--red-bg);color:var(--red)}
+.upd-chip.ok{background:var(--green-bg);color:var(--green)}
+.upd-notes{font-size:11px;color:var(--gray-400);padding:0 16px 8px;font-style:italic}
+.acc-wrap{display:flex;flex-direction:column;gap:8px}
+.acc-item{background:white;border-radius:var(--r);box-shadow:var(--sh);overflow:hidden}
+.acc-hdr{padding:14px 18px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:background .15s;border-left:4px solid var(--gray-200)}
+.acc-hdr:hover{background:var(--gray-50)}
+.acc-hdr.open{border-left-color:var(--primary);background:var(--gray-50)}
+.acc-l{display:flex;align-items:center;gap:10px;min-width:0;flex:1}
+.acc-chv{font-size:11px;color:var(--gray-400);transition:transform .2s;flex-shrink:0}
+.acc-chv.open{transform:rotate(90deg)}
+.acc-name{font-size:13px;font-weight:600;color:var(--gray-800);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.acc-r{display:flex;gap:20px;align-items:center;flex-shrink:0}
+.acc-met{text-align:right}
+.acc-met-val{font-size:12px;font-weight:700;color:var(--gray-700)}
+.acc-met-lbl{font-size:10px;color:var(--gray-400)}
+.acc-coord-row{background:var(--gold-bg);border-top:1px solid #f6e05e;padding:8px 18px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:11px}
+.acc-body{display:none;overflow-x:auto}
+.acc-body.open{display:block}
+.atbl{width:100%;border-collapse:collapse;font-size:11px;min-width:780px}
+.atbl th{background:var(--gray-50);padding:7px 9px;font-size:9px;font-weight:600;color:var(--gray-400);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--gray-200);white-space:nowrap}
+.atbl th:not(:nth-child(1)):not(:nth-child(2)){text-align:right}
+.atbl td{padding:6px 9px;border-bottom:1px solid var(--gray-100)}
+.atbl td:not(:nth-child(1)):not(:nth-child(2)){text-align:right}
+.tr-act{font-weight:600;background:white}
+.tr-task{background:var(--gray-50)}
+.tr-task td:nth-child(2){color:var(--gray-600);padding-left:22px;font-size:10.5px}
+.num-cell{width:28px;color:var(--gray-400);text-align:center;font-size:10px}
+.pos{color:var(--green);font-weight:600}
+.neg{color:var(--red);font-weight:600}
+/* ── APA CARDS v2 ── */
+.apa-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.apa-card{background:white;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.08),0 0 0 1px rgba(0,0,0,.06);overflow:hidden;cursor:pointer;transition:transform .18s,box-shadow .18s}
+.apa-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.14),0 0 0 1px rgba(0,0,0,.06)}
+.apa-chdr{padding:16px 18px 14px;position:relative;overflow:hidden}
+.apa-chdr.hdr-blue{background:linear-gradient(135deg,#1e3a5f 0%,#2c5282 100%)}
+.apa-chdr.hdr-green{background:linear-gradient(135deg,#1a5e3a 0%,#276749 100%)}
+.apa-chdr.hdr-orange{background:linear-gradient(135deg,#7b341e 0%,#c05621 100%)}
+.apa-chdr.hdr-red{background:linear-gradient(135deg,#742a2a 0%,#c53030 100%)}
+.apa-chdr::after{content:'';position:absolute;right:-30px;top:-30px;width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,.06)}
+.apa-co{font-size:14px;font-weight:700;color:white;margin-bottom:3px;position:relative}
+.apa-sub{font-size:11px;color:rgba(255,255,255,.65);position:relative}
+.apa-hdr-badge{position:absolute;top:14px;right:16px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);color:white;padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600}
+.apa-cbody{padding:16px 18px}
+.apa-main-row{display:flex;align-items:center;gap:16px;margin-bottom:14px}
+.apa-ring-wrap{position:relative;width:80px;height:80px;flex-shrink:0}
+.apa-ring{width:80px;height:80px;transform:rotate(-90deg)}
+.apa-ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.apa-ring-pct{font-size:14px;font-weight:800;color:var(--gray-800);line-height:1}
+.apa-ring-lbl{font-size:9px;color:var(--gray-400);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+.apa-kpi-col{flex:1;display:flex;flex-direction:column;gap:8px}
+.apa-kpi-item{display:flex;justify-content:space-between;align-items:center;padding:6px 10px;background:var(--gray-50);border-radius:6px}
+.apa-kpi-lbl{font-size:10px;color:var(--gray-500);font-weight:500}
+.apa-kpi-val{font-size:13px;font-weight:700;color:var(--gray-800)}
+.apa-bars-section{margin-bottom:12px}
+.apa-bar2{margin-bottom:8px}
+.apa-bar2-hdr{display:flex;justify-content:space-between;margin-bottom:4px}
+.apa-bar2-lbl{font-size:10px;color:var(--gray-500);font-weight:500}
+.apa-bar2-pct{font-size:10px;font-weight:700;color:var(--gray-700)}
+.apa-bar2-track{height:6px;background:var(--gray-100);border-radius:3px;overflow:visible;position:relative}
+.apa-bar2-fill{height:6px;border-radius:3px;transition:width .3s}
+.apa-bar2-fill.g{background:linear-gradient(90deg,#48bb78,#276749)}
+.apa-bar2-fill.o{background:linear-gradient(90deg,#ed8936,#c05621)}
+.apa-bar2-fill.r{background:linear-gradient(90deg,#fc8181,#c53030)}
+.apa-over-marker{position:absolute;right:0;top:-3px;width:2px;height:12px;background:var(--red);border-radius:1px}
+.apa-chips-row{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:4px}
+.apa-chip{display:inline-flex;align-items:center;gap:3px;padding:3px 8px;border-radius:10px;font-size:10px;font-weight:600;white-space:nowrap}
+.apa-chip.gr{background:var(--green-bg);color:var(--green)}.apa-chip.re{background:var(--red-bg);color:var(--red)}.apa-chip.or{background:var(--orange-bg);color:var(--orange)}.apa-chip.bl{background:#ebf8ff;color:#2b6cb0}.apa-chip.gy{background:var(--gray-100);color:var(--gray-600)}
+.apa-cftr{padding:10px 18px;background:var(--gray-50);border-top:1px solid var(--gray-100);display:flex;justify-content:space-between;align-items:center;gap:8px}
+/* Legacy selectors kept for compatibility */
+.apa-chdr{}.apa-cbody{}.apa-kpis{}.apa-k{}.apa-k-val{}.apa-k-lbl{}.apa-bar-row{}.apa-bar-lbl{}
+.up-banner{background:white;border:2px dashed var(--gray-200);border-radius:var(--r);padding:28px;text-align:center;margin-bottom:14px}
+.up-banner h3{color:var(--gray-600);font-size:15px;margin-bottom:6px}
+.up-banner p{color:var(--gray-400);font-size:12px;margin-bottom:14px}
+.up-lbl{display:inline-block;background:var(--primary);color:white;padding:9px 18px;border-radius:var(--r-sm);font-size:13px;font-weight:600;cursor:pointer}
+.up-lbl:hover{background:var(--primary-lt)}
+.modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:300;align-items:flex-start;justify-content:center;overflow-y:auto;padding:16px}
+.modal-ov.show{display:flex}
+.mbox{background:white;border-radius:12px;width:100%;max-width:700px;margin:auto;box-shadow:0 25px 50px rgba(0,0,0,.3)}
+.mhdr{padding:18px 22px 14px;border-bottom:1px solid var(--gray-200);display:flex;align-items:center;justify-content:space-between}
+.mhdr h3{font-size:15px;font-weight:700;color:var(--gray-800)}
+.mclose{background:none;border:none;font-size:20px;color:var(--gray-400);cursor:pointer;padding:2px}
+.mclose:hover{color:var(--gray-700)}
+.mbody{padding:18px 22px;max-height:72vh;overflow-y:auto}
+.mftr{padding:14px 22px;border-top:1px solid var(--gray-200);display:flex;justify-content:flex-end;gap:10px}
+.pcard{background:var(--gray-50);border-radius:var(--r);padding:14px 16px;margin-bottom:14px;border:1px solid var(--gray-200)}
+.pcard h4{font-size:12px;font-weight:700;color:var(--primary);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--gray-200)}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.frow.full{grid-template-columns:1fr}
+.fld label{display:block;font-size:10px;font-weight:600;color:var(--gray-600);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
+.fld select,.fld input,.fld textarea{width:100%;padding:7px 9px;border:1.5px solid var(--gray-200);border-radius:var(--r-sm);font-size:12px;color:var(--gray-800);background:white}
+.fld select:focus,.fld input:focus,.fld textarea:focus{outline:none;border-color:var(--primary)}
+.fld textarea{resize:vertical;min-height:60px;font-family:inherit}
+.risk-tgl{display:flex;gap:6px}
+.rbtn{padding:5px 14px;border:1.5px solid var(--gray-200);background:white;border-radius:4px;font-size:12px;cursor:pointer;font-family:inherit;transition:all .2s}
+.rbtn.rno{border-color:var(--green);background:var(--green-bg);color:var(--green);font-weight:600}
+.rbtn.ryes{border-color:var(--red);background:var(--red-bg);color:var(--red);font-weight:600}
+.btn-cancel{padding:9px 18px;background:white;border:1.5px solid var(--gray-200);border-radius:var(--r-sm);font-size:13px;cursor:pointer;color:var(--gray-700)}
+.btn-save{padding:9px 22px;background:var(--primary);color:white;border:none;border-radius:var(--r-sm);font-size:13px;font-weight:600;cursor:pointer}
+.btn-save:hover{background:var(--primary-lt)}
+.empty{text-align:center;padding:48px 20px;color:var(--gray-400)}
+.empty h3{font-size:16px;margin-bottom:6px;color:var(--gray-600)}
+.amt{font-variant-numeric:tabular-nums}
+.load-overlay{display:none;position:fixed;inset:0;background:rgba(30,58,95,.85);z-index:500;align-items:center;justify-content:center;flex-direction:column;gap:16px;color:white}
+.load-overlay.show{display:flex}
+.spinner{width:48px;height:48px;border:4px solid rgba(255,255,255,.3);border-top-color:white;border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* ── Tablet ──────────────────────────────────────────────────────── */
+@media(max-width:1000px){
+  .kpi4{grid-template-columns:repeat(2,1fr)}
+  .co-layout{grid-template-columns:1fr}
+  .sidebar{display:grid;grid-template-columns:1fr 1fr}
+}
+/* ── Mobile ──────────────────────────────────────────────────────── */
+@media(max-width:640px){
+  /* Header */
+  .aph{padding:0 12px;height:52px}
+  .aph-logo{font-size:18px}
+  .aph-title,.aph-sep{display:none}
+  .aph-r{gap:6px}
+  .hbtn{padding:6px 10px;font-size:11px}
+  .hbtn.accent .btn-txt{display:none}
+  .hbtn.accent::before{content:"📂"}
+  .hbtn[onclick*="doLogout"] .btn-txt2{display:none}
+  .hbtn[onclick*="doLogout"]::before{content:"⎋"}
+  .ubadge{max-width:90px;font-size:11px;padding:4px 8px}
+  /* Tabbar */
+  .tabbar{top:52px;padding:0 8px}
+  .tbtn{padding:10px 12px;font-size:12px}
+  /* Content */
+  .tab-content{padding:12px}
+  /* KPI cards */
+  .kpi4{grid-template-columns:1fr 1fr;gap:10px}
+  .kval{font-size:18px}
+  .klbl{font-size:9px}
+  /* Summary bar */
+  .sbar{grid-template-columns:1fr 1fr;gap:8px;padding:10px 14px}
+  /* Tables — horizontal scroll */
+  .twrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  table{min-width:600px}
+  .atbl{min-width:500px}
+  thead th,tbody td{padding:7px 8px;font-size:11px}
+  .tsearch{width:130px}
+  /* Sidebar */
+  .sidebar{grid-template-columns:1fr}
+  .frow{grid-template-columns:1fr}
+  /* APA cards */
+  .apa-grid{grid-template-columns:1fr}
+  /* Activity table columns hidden on small */
+  .acc-r{display:none}
+  /* Co hero */
+  .co-hero{padding:14px 16px}
+  /* Project name in hero */
+  .co-hero h2{font-size:18px}
+  /* Forms */
+  .frow.full{grid-template-columns:1fr}
+  /* Login */
+  .lcard{padding:28px 20px;max-width:95vw}
+  /* Modal */
+  .mbox{margin:8px;width:calc(100% - 16px)}
+  .mbody{max-height:60vh}
+  /* Upload banner */
+  .up-banner{padding:20px 14px}
+}
+/* ── Very small phones ───────────────────────────────────────────── */
+@media(max-width:380px){
+  .kpi4{grid-template-columns:1fr}
+  .sbar{grid-template-columns:1fr}
+  .ubadge{display:none}
+}
+/* ── Coordinator form — units & photos ──────────────────────────── */
+.unit-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
+.unit-box{background:white;border:1.5px solid var(--gray-200);border-radius:var(--r-sm);padding:8px 10px;text-align:center}
+.unit-box.uconstru{border-color:#3b82f6;background:#eff6ff}
+.unit-box.usvender{border-color:#f59e0b;background:#fffbeb}
+.unit-box.utramite{border-color:#8b5cf6;background:#f5f3ff}
+.unit-box.ugarantia{border-color:#10b981;background:#ecfdf5}
+.unit-box label{display:block;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;color:var(--gray-600)}
+.unit-box.uconstru label{color:#1d4ed8}
+.unit-box.usvender label{color:#b45309}
+.unit-box.utramite label{color:#6d28d9}
+.unit-box.ugarantia label{color:#047857}
+.unit-box input{width:100%;border:none;background:transparent;font-size:20px;font-weight:700;text-align:center;color:var(--gray-800);outline:none}
+.unit-box input::-webkit-inner-spin-button{opacity:.4}
+.unit-total{background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--r-sm);padding:6px 12px;font-size:12px;color:var(--gray-600);margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+.unit-total span{font-weight:700;color:var(--primary)}
+.photo-upload-zone{border:2px dashed var(--gray-200);border-radius:var(--r);padding:16px;text-align:center;margin-bottom:10px;transition:border-color .2s;cursor:pointer}
+.photo-upload-zone:hover{border-color:var(--primary)}
+.photo-upload-zone p{font-size:12px;color:var(--gray-400);margin-bottom:8px}
+.photo-thumb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:6px;margin-top:8px}
+.photo-thumb{position:relative;border-radius:var(--r-sm);overflow:hidden;aspect-ratio:1;background:var(--gray-100)}
+.photo-thumb img{width:100%;height:100%;object-fit:cover}
+.photo-del{position:absolute;top:2px;right:2px;background:rgba(0,0,0,.55);color:white;border:none;border-radius:50%;width:18px;height:18px;font-size:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1}
+.photo-del:hover{background:rgba(197,48,48,.9)}
+.upd-units{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.upd-unit-chip{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;white-space:nowrap}
+.upd-unit-chip.uc{background:#eff6ff;color:#1d4ed8}
+.upd-unit-chip.uv{background:#fffbeb;color:#b45309}
+.upd-unit-chip.ut{background:#f5f3ff;color:#6d28d9}
+.upd-unit-chip.ug{background:#ecfdf5;color:#047857}
+.photo-gallery{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.photo-gallery img{width:64px;height:64px;object-fit:cover;border-radius:4px;cursor:pointer;transition:transform .15s}
+.photo-gallery img:hover{transform:scale(1.08)}
+.photo-lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:600;align-items:center;justify-content:center}
+.photo-lightbox.show{display:flex}
+.photo-lightbox img{max-width:90vw;max-height:90vh;border-radius:var(--r);box-shadow:0 25px 60px rgba(0,0,0,.5)}
+.photo-lightbox-close{position:fixed;top:16px;right:20px;color:white;font-size:28px;cursor:pointer;background:none;border:none;line-height:1}
+@media(max-width:640px){.unit-grid{grid-template-columns:repeat(2,1fr)}}
+
+/* ── Permits module ───────────────────────────────────────────────── */
+.perm-panel{background:white;border-radius:var(--r);box-shadow:var(--sh);margin-bottom:14px;overflow:hidden}
+.perm-panel-hdr{background:#f0f4ff;padding:10px 16px;font-size:11px;font-weight:700;color:#3730a3;text-transform:uppercase;letter-spacing:.8px;border-bottom:1px solid #e0e7ff;display:flex;align-items:center;justify-content:space-between}
+.perm-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:0}
+.perm-cell{padding:10px 8px;border-right:1px solid var(--gray-100);text-align:center;transition:background .15s}
+.perm-cell:last-child{border-right:none}
+.perm-icon{font-size:20px;margin-bottom:4px}
+.perm-label{font-size:9px;font-weight:600;color:var(--gray-600);text-transform:uppercase;letter-spacing:.4px;margin-bottom:5px;line-height:1.2}
+.perm-badge{display:inline-flex;align-items:center;gap:2px;padding:3px 7px;border-radius:10px;font-size:10px;font-weight:700;white-space:nowrap}
+.perm-completado{background:#dcfce7;color:#166534}
+.perm-riesgo{background:#fef3c7;color:#92400e}
+.perm-atrasado{background:#fee2e2;color:#991b1b}
+.perm-supervision{background:#e0e7ff;color:#3730a3}
+.perm-sininiciar{background:#f3f4f6;color:#6b7280}
+.perm-fecha{font-size:9px;color:var(--gray-400);margin-top:3px}
+.risk-banner{background:linear-gradient(90deg,#fef2f2,#fff);border:1px solid #fca5a5;border-left:4px solid #dc2626;border-radius:var(--r);padding:10px 14px;margin-bottom:12px;display:flex;align-items:flex-start;gap:10px;flex-wrap:wrap}
+.risk-banner-icon{font-size:20px;flex-shrink:0}
+.risk-banner-body{flex:1;min-width:200px}
+.risk-banner-title{font-size:12px;font-weight:700;color:#991b1b;margin-bottom:4px}
+.risk-item{font-size:11px;color:#7f1d1d;margin-bottom:2px}
+/* ── Gerencia Executive Dashboard ─────────────────────────────────── */
+.dash-header{background:linear-gradient(135deg,var(--primary),var(--primary-lt));color:white;border-radius:var(--r);padding:20px 24px;margin-bottom:16px}
+.dash-header h2{font-size:22px;font-weight:800;margin-bottom:4px}
+.dash-header p{font-size:12px;opacity:.75}
+.dash-kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.dash-kpi{background:white;border-radius:var(--r);padding:14px 16px;box-shadow:var(--sh);text-align:center;border-top:3px solid var(--primary)}
+.dash-kpi.k-green{border-top-color:#16a34a}
+.dash-kpi.k-red{border-top-color:#dc2626}
+.dash-kpi.k-amber{border-top-color:#d97706}
+.dash-kpi-val{font-size:28px;font-weight:800;color:var(--gray-800);line-height:1}
+.dash-kpi-lbl{font-size:10px;font-weight:600;color:var(--gray-400);text-transform:uppercase;letter-spacing:.5px;margin-top:4px}
+.dash-section{margin-bottom:18px}
+.dash-section-title{font-size:13px;font-weight:700;color:var(--primary);margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid var(--gray-200);display:flex;align-items:center;gap:6px}
+.dash-co-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px}
+.dash-co-card{background:white;border-radius:var(--r);box-shadow:var(--sh);overflow:hidden;border-left:4px solid var(--primary)}
+.dash-co-card.risk-red{border-left-color:#dc2626}
+.dash-co-card.risk-amber{border-left-color:#d97706}
+.dash-co-card.risk-green{border-left-color:#16a34a}
+.dash-co-hdr{padding:10px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--gray-100)}
+.dash-co-name{font-size:12px;font-weight:700;color:var(--gray-800)}
+.dash-co-body{padding:10px 14px}
+.dash-co-row{display:flex;justify-content:space-between;align-items:center;font-size:11px;padding:3px 0;border-bottom:1px solid var(--gray-100)}
+.dash-co-row:last-child{border-bottom:none}
+.dash-co-row label{color:var(--gray-500);font-weight:500}
+.dash-co-row span{font-weight:600;color:var(--gray-800)}
+.dash-perm-row{display:flex;gap:4px;flex-wrap:wrap;padding:8px 0 4px}
+.risk-pill{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700}
+.risk-pill.red{background:#fee2e2;color:#991b1b}
+.risk-pill.amber{background:#fef3c7;color:#92400e}
+.risk-pill.blue{background:#e0e7ff;color:#3730a3}
+.risk-pill.gray{background:#f3f4f6;color:#6b7280}
+.risk-pill.green{background:#dcfce7;color:#166534}
+.perm-upload-btn{background:rgba(99,102,241,.12);border:1px solid rgba(99,102,241,.3);color:#3730a3;padding:7px 13px;border-radius:var(--r-sm);font-size:12px;cursor:pointer;display:flex;align-items:center;gap:5px;white-space:nowrap;transition:background .2s}
+.perm-upload-btn:hover{background:rgba(99,102,241,.2)}
+.notify-dot{display:inline-block;width:8px;height:8px;background:#dc2626;border-radius:50%;margin-left:4px;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@media(max-width:640px){.perm-grid{grid-template-columns:repeat(3,1fr)}.dash-kpi-row{grid-template-columns:repeat(2,1fr)}.dash-co-grid{grid-template-columns:1fr}}
+
+
+/* ── Collapsible risk details ─────────────────────────────────────────────── */
+.risk-details{border:1px solid #fca5a5;border-left:4px solid #dc2626;border-radius:var(--r);background:white;overflow:hidden}
+.risk-summary{list-style:none;display:flex;align-items:center;gap:8px;padding:10px 14px;cursor:pointer;user-select:none;background:linear-gradient(90deg,#fef2f2,#fff);transition:background .15s}
+.risk-summary::-webkit-details-marker{display:none}
+.risk-summary:hover{background:linear-gradient(90deg,#fee2e2,#fef2f2)}
+.risk-summary-icon{font-size:16px;flex-shrink:0}
+.risk-summary-text{flex:1;font-size:12px;color:#991b1b;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.risk-summary-arrow{font-size:10px;color:#dc2626;transition:transform .2s;flex-shrink:0}
+details[open] .risk-summary-arrow{transform:rotate(180deg)}
+.risk-details-body{padding:10px 14px;border-top:1px solid #fecaca}
+
+/* ── Mobile dashboard ─────────────────────────────────────────────────────── */
+@media(max-width:640px){
+  .dash-header{padding:14px 16px}
+  .dash-header h2{font-size:16px}
+  .dash-kpi-row{grid-template-columns:repeat(2,1fr);gap:8px}
+  .dash-kpi-val{font-size:20px}
+  .dash-kpi-lbl{font-size:9px}
+  .dash-co-grid{grid-template-columns:1fr;gap:10px}
+  .dash-co-card{border-left-width:3px}
+  .dash-co-hdr{padding:8px 12px}
+  .dash-co-name{font-size:12px}
+  .dash-co-body{padding:8px 12px}
+  .dash-co-row{font-size:10px}
+  .dash-perm-row{gap:3px}
+  /* APA cards mobile */
+  .apa-cbody{padding:12px 14px}
+  .apa-ring{width:64px;height:64px}
+  .apa-ring-wrap{width:64px;height:64px}
+  .apa-ring-pct{font-size:12px}
+  .apa-kpi-item{padding:4px 7px}
+  .apa-kpi-lbl{font-size:9px}
+  .apa-kpi-val{font-size:12px}
+  .perm-badge{font-size:8px;padding:1px 3px}
+  /* Collapsible */
+  .risk-summary{padding:8px 12px}
+  .risk-summary-text{font-size:11px}
+}
+@media(max-width:380px){
+  .dash-kpi-row{grid-template-columns:repeat(2,1fr)}
+  .dash-kpi-val{font-size:18px}
+}
+
+
+/* ── Alert Card Panel (empresa tab) ──────────────────────────────────────── */
+.alert-panel{background:white;border-radius:var(--r);box-shadow:var(--sh);margin-bottom:14px;overflow:hidden;border:1px solid var(--gray-200)}
+.alert-panel-hdr{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;background:linear-gradient(90deg,#1e1b4b,#312e81);color:white}
+.alert-panel-hdr-l{display:flex;align-items:center;gap:10px}
+.alert-panel-hdr-icon{font-size:20px;animation:pulse 2s infinite}
+.alert-panel-hdr-title{font-size:13px;font-weight:700;letter-spacing:.3px}
+.alert-panel-hdr-sub{font-size:11px;opacity:.7;margin-top:1px}
+.alert-panel-hdr-badges{display:flex;gap:6px}
+.alert-count-badge{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;white-space:nowrap}
+.alert-count-badge.red{background:rgba(220,38,38,.25);border:1px solid rgba(220,38,38,.5);color:#fca5a5}
+.alert-count-badge.amber{background:rgba(217,119,6,.25);border:1px solid rgba(217,119,6,.5);color:#fcd34d}
+.alert-cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0;border-top:1px solid var(--gray-200)}
+.alert-card{padding:14px 16px;border-right:1px solid var(--gray-100);position:relative;overflow:hidden;transition:background .15s}
+.alert-card:last-child{border-right:none}
+.alert-card:hover{background:var(--gray-50)}
+.alert-card.ac-atrasado{border-top:3px solid #dc2626}
+.alert-card.ac-riesgo{border-top:3px solid #d97706}
+.alert-card::before{content:'';position:absolute;right:-20px;top:-20px;width:80px;height:80px;border-radius:50%;opacity:.05}
+.alert-card.ac-atrasado::before{background:#dc2626}
+.alert-card.ac-riesgo::before{background:#d97706}
+.alert-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.alert-card-icon{font-size:22px}
+.alert-card-status-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:6px;font-size:10px;font-weight:800;letter-spacing:.3px}
+.acb-atrasado{background:#fee2e2;color:#991b1b}
+.acb-riesgo{background:#fef3c7;color:#92400e}
+.alert-card-type{font-size:12px;font-weight:700;color:var(--gray-800);margin-bottom:3px}
+.alert-card-proj{font-size:11px;color:var(--gray-500);margin-bottom:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.alert-card-date{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;padding:2px 7px;border-radius:4px;background:var(--gray-100);color:var(--gray-600)}
+.alert-card-date.overdue{background:#fee2e2;color:#991b1b}
+@media(max-width:640px){
+  .alert-cards-grid{grid-template-columns:repeat(2,1fr)}
+  .alert-card{padding:10px 12px}
+  .alert-card-icon{font-size:18px}
+}
+@media(max-width:380px){.alert-cards-grid{grid-template-columns:1fr}}
+
+/* ── Delivery conflict alert cards ───────────────────────────────────────── */
+.alert-card.ac-delivery{border-top:3px solid #7c3aed}
+.alert-card.ac-delivery::before{background:#7c3aed}
+.acb-delivery{background:#ede9fe;color:#4c1d95}
+.alert-section-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--gray-400);padding:8px 16px 4px;background:var(--gray-50);border-top:1px solid var(--gray-100)}
+.alert-delivery-dates{display:flex;flex-direction:column;gap:3px;margin-top:6px}
+.alert-date-row{display:flex;align-items:center;justify-content:space-between;font-size:10px}
+.alert-date-label{color:var(--gray-500);font-weight:500}
+.alert-date-val{font-weight:700}
+.alert-date-val.late{color:#991b1b}
+.alert-date-val.ok{color:#047857}
+/* ── DATA STATUS BAR ───────────────────────────────────────────────────────── */
+.data-status-bar{display:flex;align-items:center;gap:12px;padding:6px 20px;background:var(--gray-50);border-bottom:1px solid var(--gray-200);font-size:11px;color:var(--gray-600);flex-wrap:wrap}
+.ds-item{display:flex;align-items:center;gap:5px}
+.ds-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--gray-300)}
+.ds-dot.ds-ok{background:#16a34a}
+.ds-dot.ds-none{background:#dc2626}
+.ds-sep{color:var(--gray-300);font-size:10px}
+
+/* ── PERMIT MODAL STATUS ───────────────────────────────────────────────────── */
+.pm-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid var(--gray-200)}
+.pm-row:last-child{border-bottom:none}
+
+/* ── PENDING PANEL ─────────────────────────────────────────────────────────── */
+.pend-panel{background:white;border-radius:var(--r);box-shadow:var(--sh);margin-bottom:14px;overflow:hidden;border-left:4px solid #d97706}
+.pend-panel.pend-own{border-left-color:#6366f1}
+.pend-hdr{background:linear-gradient(90deg,#451a03,#92400e);color:white;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.pend-panel.pend-own .pend-hdr{background:linear-gradient(90deg,#1e1b4b,#4338ca)}
+.pend-hdr-title{font-weight:600;font-size:13px}
+.pend-hdr-sub{font-size:11px;opacity:.8}
+.pend-hdr-actions{display:flex;gap:8px;flex-shrink:0}
+.pend-body{padding:14px 16px;overflow-x:auto}
+.pend-table{width:100%;border-collapse:collapse;font-size:12px}
+.pend-table th{text-align:left;padding:6px 10px;background:var(--gray-50);color:var(--gray-600);font-weight:600;font-size:11px;border-bottom:1px solid var(--gray-200)}
+.pend-table td{padding:6px 10px;border-bottom:1px solid var(--gray-100);vertical-align:top}
+.pend-table tr:last-child td{border-bottom:none}
+.btn-approve{background:#16a34a;color:white;border:none;border-radius:6px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer;transition:background .15s}
+.btn-approve:hover{background:#15803d}
+.btn-reject{background:#dc2626;color:white;border:none;border-radius:6px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer;transition:background .15s}
+.btn-reject:hover{background:#b91c1c}
+
+/* ── SYNC STATUS ───────────────────────────────────────────────────────────── */
+.sync-dot{display:inline-block;width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.sync-none{background:var(--gray-300)}
+.sync-ok{background:#16a34a;box-shadow:0 0 0 2px rgba(22,163,74,.2)}
+.sync-err{background:#dc2626;box-shadow:0 0 0 2px rgba(220,38,38,.2)}
+.ds-dot.ds-sync{background:#6366f1}
+.sync-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:#1f2937;color:white;padding:10px 20px;border-radius:20px;font-size:13px;font-weight:500;opacity:0;transition:all .3s;z-index:9999;pointer-events:none;white-space:nowrap}
+.sync-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ── PENDING DOT ON TAB BUTTON ────────────────────────────────────────────── */
+.pend-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#f59e0b;margin-left:5px;vertical-align:middle;box-shadow:0 0 0 2px rgba(245,158,11,.3);animation:pulse-dot 2s infinite}
+@keyframes pulse-dot{0%,100%{box-shadow:0 0 0 2px rgba(245,158,11,.3)}50%{box-shadow:0 0 0 4px rgba(245,158,11,.15)}}
+
+</style>
+</head>
+<body>
+
+<div id="login-screen">
+<div class="lcard">
+  <div class="llogo">
+    <div class="lbadge">GLP</div>
+    <div class="ltitle">Control de Obras · Gestión de Proyectos</div>
+    <div class="lsub">Plataforma de seguimiento y control de construcción</div>
+  </div>
+  <div id="lerr" class="lerr">Usuario o contraseña incorrectos.</div>
+  <div class="fg"><label>Usuario</label>
+    <input type="text" id="lu" autocomplete="username" placeholder="nombre.usuario" onkeydown="if(event.key==='Enter')ge('lp').focus()">
+  </div>
+  <div class="fg"><label>Contraseña</label>
+    <input type="password" id="lp" autocomplete="current-password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+  </div>
+  <button class="btn-login" onclick="doLogin()">Iniciar Sesión</button>
+</div>
+</div>
+
+<div id="app">
+  <header class="aph">
+    <div class="aph-l">
+      <span class="aph-logo">GLP</span>
+      <span class="aph-sep">|</span>
+      <span class="aph-title">Control de Obras</span>
+    </div>
+    <div class="aph-r">
+      <span class="ubadge" id="ubadge"></span>
+      <label class="hbtn accent" title="Cargar Informe Resumen de Gestor de Proyecto (.xlsx)">
+        📂 <span class="btn-txt">Cargar Archivo</span>
+        <input type="file" id="excel-input" accept=".xlsx,.xls" onchange="handleFile(this)">
+      </label>
+      <button id="publish-btn" class="hbtn" onclick="publishData()" title="Publicar datos para todos los usuarios" style="display:none;background:rgba(16,185,129,.2);border-color:rgba(16,185,129,.5)">
+        📤 <span class="btn-txt">Publicar</span>
+      </button>
+      <button id="sync-cfg-btn" class="hbtn" onclick="openSyncConfig()" title="Configurar sincronización" style="display:none;gap:5px">
+        ⚙ <span class="btn-txt">Sync</span><span id="sync-dot" class="sync-dot sync-none" title="Sin configurar"></span>
+      </button>
+      <label id="perm-upload-lbl" class="perm-upload-btn" title="Cargar Reporte de Permisos (.xlsx)" style="display:none">
+        📋 <span class="btn-txt">Permisos<span id="perm-notify" class="notify-dot" style="display:none"></span></span>
+        <input type="file" id="perm-input" accept=".xlsx,.xls" style="display:none" onchange="handlePermitFile(this)">
+      </label>
+      <button class="hbtn" onclick="doLogout()" title="Cerrar sesión">⎋ <span class="btn-txt2">Salir</span></button>
+    </div>
+  </header>
+  <div id="data-status-bar" class="data-status-bar" style="display:none"></div>
+  <nav class="tabbar" id="tabbar"></nav>
+  <div id="tab-contents"></div>
+</div>
+
+<div id="photo-lightbox" class="photo-lightbox" onclick="closeLightbox()">
+  <button class="photo-lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lb-img" src="" alt="Foto">
+</div>
+<div class="load-overlay" id="load-overlay">
+  <div class="spinner"></div>
+  <div id="load-msg" style="font-size:14px;font-weight:500">Cargando librería Excel...</div>
+</div>
+
+<!-- Sync Config Modal -->
+<div class="modal-ov" id="sync-modal">
+  <div class="mbox" style="max-width:480px">
+    <div class="mhdr" style="background:linear-gradient(90deg,#064e3b,#065f46);border-radius:12px 12px 0 0">
+      <h3 style="color:white;font-size:15px">⚙ Configuración de Sincronización</h3>
+      <button class="mclose" onclick="closeSyncConfig()" style="color:white">×</button>
+    </div>
+    <div class="mbody" style="padding:20px 24px">
+      <p style="margin:0 0 16px;color:var(--gray-600);font-size:13px">Configure un almacén compartido para que todos los usuarios vean los datos más recientes al iniciar sesión.</p>
+
+      <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:12px 14px;margin-bottom:16px;font-size:12px;color:#166534">
+        <strong>Opciones gratuitas:</strong><br>
+        • <strong>Cloudflare Worker</strong> (recomendado): URL del Worker + Token secreto — ver Guía de Publicación<br>
+        • <strong>Firebase Realtime DB</strong>: URL de la base de datos (<code>https://PROYECTO.firebaseio.com/glp.json</code>)<br>
+        • <strong>JSONBin.io</strong>: URL de la API del Bin + API Key
+      </div>
+
+      <label style="display:block;font-size:12px;font-weight:600;color:var(--gray-700);margin-bottom:4px">URL de sincronización *</label>
+      <input id="sync-url" type="text" placeholder="https://glp-sync.USUARIO.workers.dev"
+        style="width:100%;box-sizing:border-box;border:1px solid var(--gray-300);border-radius:6px;padding:8px 10px;font-size:13px;margin-bottom:12px">
+
+      <label style="display:block;font-size:12px;font-weight:600;color:var(--gray-700);margin-bottom:4px">Token / API Key (requerido para Cloudflare Worker y JSONBin)</label>
+      <input id="sync-key" type="password" placeholder="GLP_SYNC_2026 (o el token que configuró)"
+        style="width:100%;box-sizing:border-box;border:1px solid var(--gray-300);border-radius:6px;padding:8px 10px;font-size:13px;margin-bottom:12px">
+
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+        <button onclick="testSyncConnection()" style="background:#e0f2fe;color:#0c4a6e;border:1px solid #7dd3fc;border-radius:6px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer">🔌 Probar conexión</button>
+        <span id="sync-test-result" style="font-size:12px;color:var(--gray-600)"></span>
+      </div>
+    </div>
+    <div class="mftr" style="display:flex;gap:10px">
+      <button class="btn-cancel" onclick="closeSyncConfig()" style="flex:1">Cancelar</button>
+      <button class="btn-save" onclick="saveSyncConfigForm()" style="flex:1">💾 Guardar configuración</button>
+    </div>
+  </div>
+</div>
+
+<!-- Permit Update Modal -->
+<div class="modal-ov" id="permit-modal">
+  <div class="mbox" style="max-width:420px">
+    <div class="mhdr" style="background:linear-gradient(90deg,#1e1b4b,#4338ca);border-radius:12px 12px 0 0">
+      <h3 style="color:white;font-size:15px">📋 Reporte de Permisos</h3>
+      <button class="mclose" onclick="closePermitModal()" style="color:white">×</button>
+    </div>
+    <div class="mbody" style="padding:20px 24px">
+      <p style="margin:0 0 16px;color:var(--gray-600);font-size:13px">Estado actual del reporte de permisos en la plataforma:</p>
+      <div id="perm-modal-status" style="background:var(--gray-50);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;font-size:13px"></div>
+      <p style="margin:14px 0 0;font-size:11px;color:var(--gray-400)">Se recomienda actualizar el reporte semanalmente.</p>
+    </div>
+    <div class="mftr" style="display:flex;gap:10px">
+      <button class="btn-cancel" onclick="closePermitModal()" style="flex:1">Continuar sin cambios</button>
+      <button class="btn-save" onclick="permitModalLoad()" style="flex:1">📂 Cargar nueva versión</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-ov" id="upd-modal">
+  <div class="mbox">
+    <div class="mhdr">
+      <h3 id="modal-title">Actualizar Proyectos</h3>
+      <button class="mclose" onclick="closeModal()">×</button>
+    </div>
+    <div class="mbody" id="modal-body"></div>
+    <div class="mftr">
+      <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+      <button class="btn-save" onclick="saveUpdates()">💾 Guardar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+'use strict';
+
+// ── XLSX LOADER — tries 4 CDNs automatically ──────────────────────────────────
+const XLSX_CDNS = [
+  'https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js',
+  'https://cdn.sheetjs.com/xlsx-0.18.5/package/dist/xlsx.full.min.js',
+  'https://unpkg.com/xlsx@0.18.5/dist/xlsx.full.min.js',
+  'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js',
+];
+let _xlsxReady = false, _xlsxCbs = [];
+
+function loadXLSX(cb) {
+  if (window.XLSX) { cb(); return; }
+  _xlsxCbs.push(cb);
+  if (_xlsxReady) return;
+  _xlsxReady = true;
+  let i = 0;
+  function next() {
+    if (i >= XLSX_CDNS.length) {
+      hideLoader();
+      alert('No se pudo cargar la librería Excel.\n\nVerifique su conexión a internet e intente nuevamente.\n\nCDNs intentados:\n' + XLSX_CDNS.join('\n'));
+      _xlsxReady = false; _xlsxCbs = []; return;
+    }
+    const s = document.createElement('script');
+    s.src = XLSX_CDNS[i++];
+    s.onload = () => {
+      if (!window.XLSX) { document.head.removeChild(s); next(); return; }
+      hideLoader();
+      const fns = _xlsxCbs.slice(); _xlsxCbs = [];
+      fns.forEach(f => f());
+    };
+    s.onerror = () => { document.head.removeChild(s); next(); };
+    document.head.appendChild(s);
+  }
+  next();
+}
+
+function showLoader(msg) {
+  const el = ge('load-overlay');
+  if(el){ ge('load-msg').textContent = msg||'Procesando...'; el.classList.add('show'); }
+}
+function hideLoader() {
+  const el = ge('load-overlay');
+  if(el) el.classList.remove('show');
+}
+
+// ── CONSTANTS ─────────────────────────────────────────────────────────────────
+const USERS_DB = {
+  'admin':                  {pw:'GLP2026',role:'admin',   display:'Administrador General',     company:null},
+  'gerencia.construccion':  {pw:'GLP2026',role:'gerencia',display:'Gerencia de Construcción',  company:null},
+  'gerencia.compras':       {pw:'GLP2026',role:'gerencia',display:'Gerencia de Compras',        company:null},
+  'gerencia.mejoracontinua':{pw:'GLP2026',role:'gerencia',display:'Gerencia Mejora Continua',  company:null},
+  'gerencia.permisos':      {pw:'GLP2026',role:'gerencia',display:'Gerencia de Permisos',      company:null},
+  'gerencia.admincomer':    {pw:'GLP2026',role:'gerencia',display:'Gerencia Admin. Comercial', company:null},
+  'gerencia.apa':           {pw:'GLP2026',role:'gerencia',display:'Gerencia APA',              company:null},
+  'playaescondida':         {pw:'GLP2026',role:'company', display:'Coord. Playa Escondida',    company:'Playa Escondida Beach Front'},
+  'bellavista':             {pw:'GLP2026',role:'company', display:'Coord. Bella Vista',        company:'Bella Vista Devlopment Inc.'},
+  'cia':                    {pw:'GLP2026',role:'company', display:'Coord. CIA',                company:'Compañía Insular Americana'},
+  'playadorada1':           {pw:'GLP2026',role:'company', display:'Coord. Playa Dorada I',     company:'Desarrollo Playa Dorada I'},
+  'playadorada2':           {pw:'GLP2026',role:'company', display:'Coord. Playa Dorada II',    company:'Desarrollo Playa Dorada II'},
+  'playadorada3':           {pw:'GLP2026',role:'company', display:'Coord. Playa Dorada III',   company:'Desarrollo Playa Dorada III'},
+  'playadorada4':           {pw:'GLP2026',role:'company', display:'Coord. Playa Dorada IV',    company:'Desarrollo Playa Dorada IV'},
+  'playadorada5':           {pw:'GLP2026',role:'company', display:'Coord. Playa Dorada V',     company:'Desarrollo Playa Dorada V'},
+  'dolphy':                 {pw:'GLP2026',role:'company', display:'Coord. DOLPHY 21',          company:'DOLPHY 21'},
+  'oceanreef':              {pw:'GLP2026',role:'company', display:'Coord. Ocean Reef RE',      company:'Ocean Reef RE'},
+  'bosques':                {pw:'GLP2026',role:'company', display:'Coord. Bosques',            company:'Bosques de Santa Maria'},
+  'playacaracol':           {pw:'GLP2026',role:'company', display:'Coord. Playa Caracol',      company:'Playa Caracol Development Group'},
+  // Nuevas gerencias
+  'gerente.finanzas':       {pw:'GLP2026',role:'gerencia',display:'Gerente de Finanzas',          company:null},
+  'gerente.contraloria':    {pw:'GLP2026',role:'gerencia',display:'Gerente de Contraloría',        company:null},
+  // Asistentes por proyecto
+  'asistente.playaescondida':{pw:'GLP2026',role:'asistente',display:'Asist. Playa Escondida',     company:'Playa Escondida Beach Front'},
+  'asistente.bellavista':   {pw:'GLP2026',role:'asistente',display:'Asist. Bella Vista',          company:'Bella Vista Devlopment Inc.'},
+  'asistente.cia':          {pw:'GLP2026',role:'asistente',display:'Asist. CIA',                  company:'Compañía Insular Americana'},
+  'asistente.pdorada1':     {pw:'GLP2026',role:'asistente',display:'Asist. Playa Dorada I',       company:'Desarrollo Playa Dorada I'},
+  'asistente.pdorada2':     {pw:'GLP2026',role:'asistente',display:'Asist. Playa Dorada II',      company:'Desarrollo Playa Dorada II'},
+  'asistente.pdorada3':     {pw:'GLP2026',role:'asistente',display:'Asist. Playa Dorada III',     company:'Desarrollo Playa Dorada III'},
+  'asistente.pdorada4':     {pw:'GLP2026',role:'asistente',display:'Asist. Playa Dorada IV',      company:'Desarrollo Playa Dorada IV'},
+  'asistente.pdorada5':     {pw:'GLP2026',role:'asistente',display:'Asist. Playa Dorada V',       company:'Desarrollo Playa Dorada V'},
+  'asistente.dolphy':       {pw:'GLP2026',role:'asistente',display:'Asist. DOLPHY 21',            company:'DOLPHY 21'},
+  'asistente.oceanreef':    {pw:'GLP2026',role:'asistente',display:'Asist. Ocean Reef RE',        company:'Ocean Reef RE'},
+  'asistente.bosques':      {pw:'GLP2026',role:'asistente',display:'Asist. Bosques',              company:'Bosques de Santa Maria'},
+  'asistente.playacaracol': {pw:'GLP2026',role:'asistente',display:'Asist. Playa Caracol',        company:'Playa Caracol Development Group'},
+};
+
+const COMPANY_SHORT = {
+  'Bella Vista Devlopment Inc.':'Bella Vista','Bosques de Santa Maria':'Bosques',
+  'Compañía Insular Americana':'CIA','DOLPHY 21':'Dolphy 21',
+  'Desarrollo Playa Dorada I':'P.Dorada I','Desarrollo Playa Dorada II':'P.Dorada II',
+  'Desarrollo Playa Dorada III':'P.Dorada III','Desarrollo Playa Dorada IV':'P.Dorada IV',
+  'Desarrollo Playa Dorada V':'P.Dorada V','Ocean Reef RE':'Ocean Reef',
+  'Playa Caracol Development Group':'P.Caracol','Playa Escondida Beach Front':'P.Escondida',
+};
+
+const ALL_COMPANIES = [
+  'Bella Vista Devlopment Inc.','Bosques de Santa Maria','Compañía Insular Americana',
+  'DOLPHY 21','Desarrollo Playa Dorada I','Desarrollo Playa Dorada II',
+  'Desarrollo Playa Dorada III','Desarrollo Playa Dorada IV','Desarrollo Playa Dorada V',
+  'Ocean Reef RE','Playa Caracol Development Group','Playa Escondida Beach Front',
+];
+
+const ESTATUS_OPTS = [
+  {v:'en_construccion',l:'▶ En Construcción'},{v:'sin_iniciar',l:'○ Sin Iniciar'},
+  {v:'construido_sin_vender',l:'⚑ Construido sin Vender'},
+  {v:'construido_tramite',l:'⚒ Construido en Trámite'},
+  {v:'entregado_garantia',l:'✓ Entregado en Garantía'},
+];
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let SESSION=null, EXCEL_DATA=null, PROFILES={}, PERMISOS_DATA=null, PENDING_PROFILES={}, SYNC_CFG=null;
+let _activeTab='apa', _sortCol=-1, _sortAsc=true, _searchQ='', _modalCo=null;
+
+// ── PERMIT CONSTANTS ──────────────────────────────────────────────────────────
+const PERMIT_TYPES=[
+  {key:'EIA',   label:'E. Ambiental',   icon:'🌿', cats:['ESTUDIO AMBIENTAL','MI AMBIENTE']},
+  {key:'PLANOS',label:'Apro. Planos',   icon:'📐', cats:['APROBACION PLANOS','APROB PLANO FUND','ANTEPROYECTO']},
+  {key:'CONST', label:'P. Construcción',icon:'🏗',  cats:['PERMISOS DE CONSTRUCCION','MOP']},
+  {key:'OCP',   label:'P. Ocupación',   icon:'🏠',  cats:['PERMISOS DE OCUPACION','MIVI','SINAPROC']},
+  {key:'PH',    label:'PH Incorporado', icon:'📋',  cats:['PH INCORPORACION']},
+];
+const PERMIT_STATUS_PRIORITY={'ATRASADO':0,'EN RIESGO':1,'SUPERVISION':2,'SIN INICIAR':3,'COMPLETADO':4};
+const PERMIT_STATUS_CSS={'COMPLETADO':'perm-completado','EN RIESGO':'perm-riesgo','ATRASADO':'perm-atrasado','SUPERVISION':'perm-supervision','SIN INICIAR':'perm-sininiciar'};
+const PERMIT_STATUS_ICON={'COMPLETADO':'✓','EN RIESGO':'⚠','ATRASADO':'🔴','SUPERVISION':'👁','SIN INICIAR':'○'};
+
+// Maps permit Proyecto_Final → company name(s) in Gestor
+const PERMIT_CO_MAP={
+  'Armonía':                ['Bella Vista Devlopment Inc.'],
+  'Fincas Bayside':         ['Desarrollo Playa Dorada III','Desarrollo Playa Dorada IV'],
+  'Ocean House':            ['Compañía Insular Americana'],
+  'Ocean Reef Islands':     ['Ocean Reef RE','Compañía Insular Americana'],
+  'Oceana':                 ['Compañía Insular Americana'],
+  'Panamá Viejo Residences':['Compañía Insular Americana'],
+  'Playa Caracol':          ['Playa Caracol Development Group'],
+  'Playa Dorada':           ['Desarrollo Playa Dorada I','Desarrollo Playa Dorada II','Desarrollo Playa Dorada V'],
+  'The Reserve':            ['Playa Escondida Beach Front'],
+  'Villa Sur':              ['Playa Escondida Beach Front'],
+};
+// Reverse map: company → permit projects
+function getPermitProjects(co){
+  return Object.entries(PERMIT_CO_MAP).filter(([_,cos])=>cos.includes(co)).map(([p])=>p);
+}
+
+// ── UTILS ─────────────────────────────────────────────────────────────────────
+const ge=id=>document.getElementById(id);
+const slug=s=>(s||'').replace(/[^a-z0-9]/gi,'_').toLowerCase();
+const esc=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const n=v=>{if(v==null)return 0;if(typeof v==='number')return isNaN(v)?0:v;const s=String(v).replace(/[$,\s]/g,'').trim();const f=parseFloat(s);return isNaN(f)?0:f;};
+
+function fmtM(v,d=1){
+  if(v==null||isNaN(v))return '—';
+  const a=Math.abs(v),sg=v<0?'-':'';
+  if(a>=1e9)return sg+'$'+(a/1e9).toFixed(d)+'B';
+  if(a>=1e6)return sg+'$'+(a/1e6).toFixed(d)+'M';
+  if(a>=1e3)return sg+'$'+(a/1e3).toFixed(0)+'K';
+  return sg+'$'+a.toFixed(0);
+}
+function fmtPct(v,dec=1){
+  if(v==null||v===''||isNaN(v))return '—';
+  return (n(v)*100).toFixed(dec)+'%';
+}
+function fmtDate(d){
+  if(!d)return '—';
+  try{return new Date(d).toLocaleDateString('es-PA',{year:'numeric',month:'short',day:'numeric'});}
+  catch(e){return String(d);}
+}
+function nowISO(){return new Date().toISOString();}
+function nowFmt(){return new Date().toLocaleDateString('es-PA',{year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'});}
+
+function estadoBadge(pct){
+  const p=n(pct);
+  if(p>=0.995)return '<span class="badge b-green">✓ Completado</span>';
+  if(p>0.005) return '<span class="badge b-blue">▶ En Progreso</span>';
+  return '<span class="badge b-gray">○ Sin Iniciar</span>';
+}
+
+function pbar(pct,cls,showText){
+  const v=Math.min(100,Math.max(0,n(pct)*100));
+  return '<div class="pbar-w"><div class="pbar"><div class="pfill '+cls+'" style="width:'+v.toFixed(1)+'%"></div></div>'+(showText!==false?'<span class="ppct">'+v.toFixed(1)+'%</span>':'')+'</div>';
+}
+
+// ── SESSION ───────────────────────────────────────────────────────────────────
+function loadSess(){try{return JSON.parse(localStorage.getItem('glp_sess')||'null');}catch(e){return null;}}
+function saveSess(s){localStorage.setItem('glp_sess',JSON.stringify(s));}
+function loadProfiles(){try{return JSON.parse(localStorage.getItem('glp_profiles')||'{}');}catch(e){return {};}}
+function saveProfiles(){localStorage.setItem('glp_profiles',JSON.stringify(PROFILES));}
+function loadExcel(){try{return JSON.parse(localStorage.getItem('glp_excel')||'null');}catch(e){return null;}}
+function saveExcel(d){try{localStorage.setItem('glp_excel',JSON.stringify(d));}catch(e){console.warn('Cache quota exceeded');}}
+function loadPending(){try{return JSON.parse(localStorage.getItem('glp_pending')||'{}');}catch(e){return {};}}
+function savePending(){try{localStorage.setItem('glp_pending',JSON.stringify(PENDING_PROFILES));}catch(e){}}
+function loadSyncCfg(){try{return JSON.parse(localStorage.getItem('glp_sync')||'null');}catch(e){return null;}}
+function saveSyncCfg(c){localStorage.setItem('glp_sync',JSON.stringify(c));SYNC_CFG=c;}
+
+// Detect provider from URL and build endpoints
+function syncEndpoints(cfg){
+  const u=cfg.url||'';
+  if(u.includes('firebaseio.com')){
+    // Firebase Realtime DB
+    const base=u.replace(/\.json.*$/,'');
+    return {
+      get: base+'.json',
+      put: base+'.json',
+      getHeaders: {},
+      putHeaders: {'Content-Type':'application/json'},
+      parseGet: d => d,
+    };
+  }
+  if(u.includes('workers.dev')||u.includes(cfg.token||'__no__')||cfg.provider==='cloudflare'){
+    // Cloudflare Worker
+    const token=cfg.token||cfg.apiKey||'';
+    return {
+      get: u,
+      put: u,
+      getHeaders: {},
+      putHeaders: {'Content-Type':'application/json','Authorization':'Bearer '+token},
+      parseGet: d => d,
+    };
+  }
+  // JSONBin.io
+  const binId=cfg.binId||u.split('/').filter(Boolean).pop();
+  const apiKey=cfg.apiKey||'';
+  return {
+    get: `https://api.jsonbin.io/v3/b/${binId}/latest`,
+    put: `https://api.jsonbin.io/v3/b/${binId}`,
+    getHeaders: {'X-ACCESS-KEY':apiKey,'X-BIN-META':'false'},
+    putHeaders: {'Content-Type':'application/json','X-ACCESS-KEY':apiKey},
+    parseGet: d => d.record||d,
+  };
+}
+
+async function fetchSharedData(){
+  SYNC_CFG=loadSyncCfg();
+  if(SYNC_CFG&&SYNC_CFG.url){
+    try{
+      const ep=syncEndpoints(SYNC_CFG);
+      const r=await fetch(ep.get,{headers:ep.getHeaders});
+      if(r.ok){
+        const raw=await r.json();
+        const parsed=ep.parseGet(raw);
+        // Unwrap from string envelope (avoids Firebase key restrictions)
+        const d=parsed&&parsed._wrap?JSON.parse(parsed._wrap):parsed;
+        let updated=false;
+        if(d.gestor&&d.gestor._ts){
+          const localTs=EXCEL_DATA&&EXCEL_DATA._ts?new Date(EXCEL_DATA._ts).getTime():0;
+          if(new Date(d.gestor._ts).getTime()>=localTs){EXCEL_DATA=d.gestor;saveExcel(EXCEL_DATA);updated=true;}
+        }
+        if(d.permisos&&d.permisos._ts){
+          const localTs=PERMISOS_DATA&&PERMISOS_DATA._ts?new Date(PERMISOS_DATA._ts).getTime():0;
+          if(new Date(d.permisos._ts).getTime()>=localTs){PERMISOS_DATA=d.permisos;savePermisos(PERMISOS_DATA);}
+        }
+        if(d.profiles){PROFILES=d.profiles;saveProfiles();}
+        if(d.pending){PENDING_PROFILES=d.pending;savePending();}
+        updateDataStatus();
+        setSyncIndicator('ok');
+        return;
+      }
+    }catch(e){console.warn('Sync pull failed:',e.message);}
+    setSyncIndicator('err');
+    return;
+  }
+  // Fallback: static JSON files on same origin
+  try{const r=await fetch('./gestor-data.json?_t='+Date.now());if(r.ok){const d=await r.json();EXCEL_DATA=d;saveExcel(d);}}catch(e){}
+  try{const r=await fetch('./permisos-data.json?_t='+Date.now());if(r.ok){const d=await r.json();PERMISOS_DATA=d;savePermisos(d);}}catch(e){}
+}
+
+async function syncPush(silent=false){
+  SYNC_CFG=loadSyncCfg();
+  if(!SYNC_CFG||!SYNC_CFG.url){return false;}
+  const raw={
+    gestor:EXCEL_DATA||null,
+    permisos:PERMISOS_DATA||null,
+    profiles:PROFILES||{},
+    pending:PENDING_PROFILES||{},
+    _syncTs:new Date().toISOString(),
+    _syncBy:SESSION?SESSION.display:'—'
+  };
+  // Wrap as string to avoid Firebase key restrictions (dots, brackets, etc.)
+  const payload={_wrap:JSON.stringify(raw)};
+  try{
+    const ep=syncEndpoints(SYNC_CFG);
+    const r=await fetch(ep.put,{method:'PUT',headers:ep.putHeaders,body:JSON.stringify(payload)});
+    if(r.ok){setSyncIndicator('ok');if(!silent)showSyncToast('✅ Datos sincronizados');return true;}
+    setSyncIndicator('err');if(!silent)showSyncToast('⚠ Error al sincronizar ('+r.status+')');return false;
+  }catch(e){setSyncIndicator('err');if(!silent)showSyncToast('⚠ Sin conexión');return false;}
+}
+
+function setSyncIndicator(state){
+  const dot=ge('sync-dot');
+  if(!dot)return;
+  dot.className='sync-dot sync-'+state;
+  dot.title=state==='ok'?'Sincronizado':state==='err'?'Error de sincronización':'Sin configurar';
+}
+function showSyncToast(msg){
+  let t=ge('sync-toast');
+  if(!t){t=document.createElement('div');t.id='sync-toast';t.className='sync-toast';document.body.appendChild(t);}
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(t._tid);t._tid=setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+// ── AUTH ──────────────────────────────────────────────────────────────────────
+function doLogin(){
+  const u=ge('lu').value.trim().toLowerCase(),p=ge('lp').value.trim();
+  const usr=USERS_DB[u];
+  if(!usr||usr.pw!==p){ge('lerr').style.display='block';ge('lp').value='';ge('lp').focus();return;}
+  ge('lerr').style.display='none';
+  SESSION={username:u,role:usr.role,display:usr.display,company:usr.company};
+  saveSess(SESSION); bootApp();
+}
+function doLogout(){
+  localStorage.removeItem('glp_sess');
+  SESSION=null; EXCEL_DATA=null;
+  ge('login-screen').style.display='flex';
+  ge('app').style.display='none';
+  ge('lu').value=''; ge('lp').value='';
+}
+function bootApp(){
+  PROFILES=loadProfiles(); PENDING_PROFILES=loadPending(); EXCEL_DATA=loadExcel();
+  ge('login-screen').style.display='none';
+  ge('app').style.display='flex';
+  ge('ubadge').textContent=SESSION.display;
+  // Permit upload button — visible to permisos + admin
+  const permLbl=ge('perm-upload-lbl');
+  if(permLbl)permLbl.style.display=(SESSION.role==='admin'||SESSION.username==='gerencia.permisos')?'flex':'none';
+  // Publish button — admin only
+  const pubBtn=ge('publish-btn');
+  if(pubBtn)pubBtn.style.display=(SESSION.role==='admin'&&EXCEL_DATA)?'flex':'none';
+  const syncBtn=ge('sync-cfg-btn');
+  if(syncBtn)syncBtn.style.display=SESSION.role==='admin'?'flex':'none';
+  SYNC_CFG=loadSyncCfg();
+  setSyncIndicator(SYNC_CFG&&SYNC_CFG.url?'ok':'none');
+  // Load permits from localStorage
+  PERMISOS_DATA=loadPermisos();
+  // Update data status bar
+  updateDataStatus();
+  // Check permit notify dot
+  checkPermitNotify();
+  // Try to fetch shared data from server
+  fetchSharedData().then(()=>{
+    buildNav();
+    const isComp=SESSION.role==='company'||SESSION.role==='asistente';
+    const isGerencia=SESSION.role==='gerencia'||SESSION.role==='admin';
+    const st=isComp?'co_'+slug(SESSION.company):isGerencia?'dash':'apa';
+    showTab(st);
+    if(isComp){
+      const prof=PROFILES[SESSION.company];
+      if(!prof||!prof.updatedAt){setTimeout(()=>openModal(SESSION.company),800);}
+    }
+    // Permit modal for gerencia.permisos
+    if(SESSION.username==='gerencia.permisos'){
+      setTimeout(()=>showPermitModal(),900);
+    }
+  });
+}
+
+function updateDataStatus(){
+  const bar=ge('data-status-bar');
+  if(!bar)return;
+  const gestorTs=EXCEL_DATA&&EXCEL_DATA._ts?fmtDate(EXCEL_DATA._ts):'Sin datos';
+  const permTs=PERMISOS_DATA&&PERMISOS_DATA._ts?fmtDate(PERMISOS_DATA._ts):'Sin datos';
+  const syncCfg=loadSyncCfg();
+  const syncProvider=syncCfg&&syncCfg.url?(syncCfg.url.includes('workers.dev')||syncCfg.provider==='cloudflare'?'Cloudflare':syncCfg.url.includes('firebaseio')?'Firebase':'JSONBin'):null;
+  const syncLbl=syncProvider?`<span class="ds-sep">|</span><span class="ds-item"><span class="ds-dot ds-sync"></span>Sync: <strong>${syncProvider}</strong></span>`:'<span class="ds-sep">|</span><span class="ds-item" style="color:#d97706"><span class="ds-dot" style="background:#d97706"></span>Sin sincronización — configure Sync</span>';
+  bar.innerHTML=`<span class="ds-item"><span class="ds-dot ${EXCEL_DATA?'ds-ok':'ds-none'}"></span>Gestor: <strong>${gestorTs}</strong></span><span class="ds-sep">|</span><span class="ds-item"><span class="ds-dot ${PERMISOS_DATA?'ds-ok':'ds-none'}"></span>Permisos: <strong>${permTs}</strong></span>${syncLbl}`;
+  bar.style.display='flex';
+}
+
+
+function loadPermisos(){try{return JSON.parse(localStorage.getItem('glp_permisos')||'null');}catch(e){return null;}}
+function savePermisos(d){try{localStorage.setItem('glp_permisos',JSON.stringify(d));}catch(e){}}
+function isPermitStale(){
+  if(!PERMISOS_DATA||!PERMISOS_DATA._ts)return true;
+  return (Date.now()-new Date(PERMISOS_DATA._ts).getTime())>7*864e5; // 7 days
+}
+function checkPermitNotify(){
+  const dot=ge('perm-notify');
+  if(dot)dot.style.display=isPermitStale()?'inline-block':'none';
+}
+
+function showPermitModal(){
+  const m=ge('permit-modal');
+  if(!m)return;
+  const stale=!PERMISOS_DATA||isPermitStale();
+  const ts=PERMISOS_DATA&&PERMISOS_DATA._ts?fmtDate(PERMISOS_DATA._ts):'Nunca';
+  const cnt=PERMISOS_DATA?Object.keys(PERMISOS_DATA.projects||{}).length:0;
+  const statusColor=stale?'#dc2626':'#16a34a';
+  const statusLabel=stale?'⚠ Desactualizado':'✓ Al día';
+  ge('perm-modal-status').innerHTML=`
+    <div class="pm-row"><span>Estado:</span><strong style="color:${statusColor}">${statusLabel}</strong></div>
+    <div class="pm-row"><span>Última carga:</span><strong>${ts}</strong></div>
+    <div class="pm-row"><span>Proyectos:</span><strong>${cnt}</strong></div>`;
+  m.classList.add('show');
+}
+function closePermitModal(){
+  const m=ge('permit-modal');if(m)m.classList.remove('show');
+}
+function permitModalLoad(){
+  closePermitModal();
+  ge('perm-input').click();
+}
+
+// ── PERMIT FILE HANDLING ──────────────────────────────────────────────────────
+function handlePermitFile(inp){
+  const file=inp.files[0]; if(!file)return;
+  inp.value='';
+  showLoader('Procesando permisos...');
+  loadXLSX(()=>{
+    const rd=new FileReader();
+    rd.onload=e=>{
+      try{
+        const wb=XLSX.read(e.target.result,{type:'array',cellDates:true});
+        PERMISOS_DATA=parsePermisos(wb);
+        savePermisos(PERMISOS_DATA);
+        checkPermitNotify();
+        hideLoader();
+        syncPush(true);  // auto-sync permits
+        // Rebuild affected tabs
+        const el=ge('tab-dash');if(el)el.innerHTML=renderDash();
+        document.querySelectorAll('[id^="tab-co_"]').forEach(el=>{ const co=el.dataset.co; if(co)el.innerHTML=renderCo(co); });
+        const al=ge('tab-apa');if(al)al.innerHTML=renderAPA();
+        alert('✅ Permisos cargados correctamente.\n'+Object.keys(PERMISOS_DATA.projects||{}).length+' proyectos con permisos.');
+      }catch(err){hideLoader();alert('Error al procesar permisos: '+err.message);}
+    };
+    rd.readAsArrayBuffer(file);
+  });
+}
+
+function parsePermisos(wb){
+  const sn=wb.SheetNames[0];
+  const ws=wb.Sheets[sn];
+  const rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:null,raw:false});
+  const projects={};
+  for(let i=1;i<rows.length;i++){
+    const row=rows[i]; if(!row)continue;
+    const p16=row[15]; // Proyecto_Final (col P, 0-based 15)
+    const tipo=row[1];  // Tipo de Tarea
+    const estReal=row[14]; // Estado Real
+    const estProy=row[13]; // Estado según Proyección Original
+    const fechaVenc=row[8]; // Fecha Vencimiento
+    const fechaTerm=row[9]; // Fecha Terminación
+    const tarea=row[3];    // Task Name
+    const desfase=row[12]; // Desfase Terminación
+
+    if(!p16||String(p16).trim()==='-'||String(p16).trim()==='#N/A')continue;
+    const pname=String(p16).trim();
+    if(!projects[pname])projects[pname]={};
+
+    const tipoU=String(tipo||'').trim().toUpperCase();
+    for(const pt of PERMIT_TYPES){
+      if(pt.cats.some(c=>tipoU.includes(c))){
+        const est=String(estReal||'SIN INICIAR').trim().toUpperCase();
+        const curP=projects[pname][pt.key];
+        const curPrio=curP?PERMIT_STATUS_PRIORITY[curP.estado]??4:4;
+        const newPrio=PERMIT_STATUS_PRIORITY[est]??4;
+        if(!curP||newPrio<curPrio){
+          projects[pname][pt.key]={
+            estado:est,
+            estadoProy:String(estProy||'').trim().toUpperCase(),
+            fechaVenc:fechaVenc?String(fechaVenc).slice(0,10):'',
+            fechaTerm:fechaTerm?String(fechaTerm).slice(0,10):'',
+            desfase:desfase?String(desfase).trim():'',
+          };
+        }
+        break;
+      }
+    }
+  }
+  return {projects,_ts:new Date().toISOString()};
+}
+
+// ── PERMIT RENDERING ──────────────────────────────────────────────────────────
+function permBadge(estado){
+  if(!estado)estado='SIN INICIAR';
+  const css=PERMIT_STATUS_CSS[estado]||'perm-sininiciar';
+  const icon=PERMIT_STATUS_ICON[estado]||'○';
+  return `<span class="perm-badge ${css}">${icon} ${estado}</span>`;
+}
+
+function permRiskLevel(co){
+  // Returns 'red'|'amber'|'green'|'gray' for a company
+  const pprojs=getPermitProjects(co);
+  if(!PERMISOS_DATA||!pprojs.length)return 'gray';
+  let worst=4;
+  pprojs.forEach(pp=>{
+    const pd=PERMISOS_DATA.projects[pp];
+    if(!pd)return;
+    PERMIT_TYPES.forEach(pt=>{
+      const p=pd[pt.key];
+      if(p)worst=Math.min(worst,PERMIT_STATUS_PRIORITY[p.estado]??4);
+    });
+  });
+  if(worst<=1)return 'red';
+  if(worst<=2)return 'amber';
+  if(worst===3)return 'amber';
+  return 'green';
+}
+
+function renderPermitPanel(co){
+  const pprojs=getPermitProjects(co);
+  if(!PERMISOS_DATA||!pprojs.length)return '';
+  let html='';
+  pprojs.forEach(pp=>{
+    const pd=PERMISOS_DATA.projects[pp]; if(!pd)return;
+    const risks=PERMIT_TYPES.filter(pt=>pd[pt.key]&&['ATRASADO','EN RIESGO'].includes(pd[pt.key].estado));
+    const riskLvl=risks.length?'🔴':'🟢';
+    html+=`<div class="perm-panel">
+      <div class="perm-panel-hdr">
+        <span>📋 Permisos — ${pp}</span>
+        <span style="font-size:10px;opacity:.7">${riskLvl} ${risks.length?risks.length+' en riesgo':'Al día'}</span>
+      </div>
+      <div class="perm-grid">`;
+    PERMIT_TYPES.forEach(pt=>{
+      const p=pd[pt.key]||{estado:'SIN INICIAR'};
+      const css=PERMIT_STATUS_CSS[p.estado]||'perm-sininiciar';
+      html+=`<div class="perm-cell">
+        <div class="perm-icon">${pt.icon}</div>
+        <div class="perm-label">${pt.label}</div>
+        ${permBadge(p.estado)}
+        ${p.fechaVenc?`<div class="perm-fecha">📅 ${p.fechaVenc}</div>`:''}
+        ${p.desfase&&p.desfase!=='PENDIENTE'?`<div class="perm-fecha" style="color:${p.estado==='ATRASADO'?'#dc2626':'#92400e'}">${p.desfase>0?'+'+p.desfase:p.desfase}d</div>`:''}
+      </div>`;
+    });
+    html+=`</div></div>`;
+  });
+  return html;
+}
+
+function renderRiskBanner(co){
+  if(!PERMISOS_DATA)return '';
+  const pprojs=getPermitProjects(co);
+
+  // ── A: permit-status risks (ATRASADO / EN RIESGO) ──
+  const risks=[];
+  if(pprojs.length){
+    pprojs.forEach(pp=>{
+      const pd=PERMISOS_DATA.projects[pp]; if(!pd)return;
+      PERMIT_TYPES.forEach(pt=>{
+        const p=pd[pt.key];
+        if(p&&(p.estado==='ATRASADO'||p.estado==='EN RIESGO'))
+          risks.push({icon:pt.icon,pp,label:pt.label,estado:p.estado,
+            fechaVenc:p.fechaVenc||'',desfase:p.desfase||''});
+      });
+    });
+  }
+
+  // ── B: delivery-vs-permit cross check ──
+  // For PH Incorporado and Permiso de Ocupación: if their fechaVenc is AFTER
+  // the coordinator-reported delivery date, flag it.
+  const deliveryAlerts=[];
+  const prof=PROFILES[co];
+  if(prof&&prof.projects&&pprojs.length){
+    // Gather all delivery dates reported by coordinator
+    const deliveries=[];
+    Object.entries(prof.projects).forEach(([pn,pd])=>{
+      const d=pd.fechaEntregaActual||pd.fechaEntregaOriginal;
+      if(d)deliveries.push({pn,date:d});
+    });
+    if(deliveries.length){
+      // Sort: earliest delivery first (most urgent)
+      deliveries.sort((a,b)=>a.date.localeCompare(b.date));
+      const earliest=deliveries[0];
+      const latest=deliveries[deliveries.length-1];
+      pprojs.forEach(pp=>{
+        const pd=PERMISOS_DATA.projects[pp]; if(!pd)return;
+        // Check PH and Ocupación
+        [{key:'PH',label:'PH Incorporado',icon:'📋'},
+         {key:'OCP',label:'P. Ocupación',icon:'🏠'}].forEach(({key,label,icon})=>{
+          const perm=pd[key]; if(!perm||perm.estado==='COMPLETADO')return;
+          const permDate=perm.fechaVenc||perm.fechaTerm; if(!permDate)return;
+          // Flag if permit date is after the LATEST delivery date
+          // (PH must be done before keys are handed over)
+          if(permDate>latest.date){
+            // Find the most affected project
+            const affected=deliveries.filter(d=>permDate>d.date).map(d=>d.pn);
+            deliveryAlerts.push({icon,label,pp,permDate,
+              deliveryDate:latest.date,
+              affectedProjects:affected,
+              estado:perm.estado,
+              daysLate:Math.round((new Date(permDate)-new Date(latest.date))/(864e5))
+            });
+          }
+        });
+      });
+    }
+  }
+
+  if(!risks.length&&!deliveryAlerts.length)return '';
+
+  const today=new Date().toISOString().slice(0,10);
+  const redCount=risks.filter(r=>r.estado==='ATRASADO').length;
+  const ambCount=risks.filter(r=>r.estado==='EN RIESGO').length;
+  const delCount=deliveryAlerts.length;
+
+  // Build risk status cards
+  const riskCards=risks.map(r=>{
+    const isAtrasado=r.estado==='ATRASADO';
+    const isOverdue=r.fechaVenc&&r.fechaVenc<today;
+    return `<div class="alert-card ${isAtrasado?'ac-atrasado':'ac-riesgo'}">
+      <div class="alert-card-top">
+        <span class="alert-card-icon">${r.icon}</span>
+        <span class="alert-card-status-badge ${isAtrasado?'acb-atrasado':'acb-riesgo'}">${isAtrasado?'🔴 ATRASADO':'⚠️ EN RIESGO'}</span>
+      </div>
+      <div class="alert-card-type">${r.label}</div>
+      <div class="alert-card-proj" title="${esc(r.pp)}">${esc(r.pp)}</div>
+      ${r.fechaVenc?`<span class="${isOverdue?'alert-card-date overdue':'alert-card-date'}">📅 Vence ${r.fechaVenc}${r.desfase&&r.desfase!=='PENDIENTE'?' · '+r.desfase+'d':''}</span>`:'<span class="alert-card-date">Sin fecha</span>'}
+    </div>`;
+  }).join('');
+
+  // Build delivery conflict cards
+  const deliveryCards=deliveryAlerts.map(d=>{
+    return `<div class="alert-card ac-delivery">
+      <div class="alert-card-top">
+        <span class="alert-card-icon">${d.icon}</span>
+        <span class="alert-card-status-badge acb-delivery">⏰ CONFLICTO ENTREGA</span>
+      </div>
+      <div class="alert-card-type">${d.label}</div>
+      <div class="alert-card-proj" title="${esc(d.pp)}">${esc(d.pp)}</div>
+      <div class="alert-delivery-dates">
+        <div class="alert-date-row">
+          <span class="alert-date-label">Vence permiso</span>
+          <span class="alert-date-val late">📅 ${d.permDate}</span>
+        </div>
+        <div class="alert-date-row">
+          <span class="alert-date-label">Entrega proyecto</span>
+          <span class="alert-date-val ok">🏁 ${d.deliveryDate}</span>
+        </div>
+        <div style="margin-top:4px;font-size:10px;font-weight:700;color:#7c3aed;background:#ede9fe;padding:3px 7px;border-radius:4px;text-align:center">
+          +${d.daysLate}d después de la entrega
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Determine if we need section labels
+  const needsLabels=riskCards&&deliveryCards;
+  const riskSection=riskCards?(needsLabels?'<div class="alert-section-label">📋 Estado de Permisos</div>':'')+`<div class="alert-cards-grid">${riskCards}</div>`:'';
+  const deliverySection=deliveryCards?(needsLabels?'<div class="alert-section-label">⏰ Conflictos con Fecha de Entrega</div>':'')+`<div class="alert-cards-grid">${deliveryCards}</div>`:'';
+
+  return `<div class="alert-panel">
+    <div class="alert-panel-hdr">
+      <div class="alert-panel-hdr-l">
+        <span class="alert-panel-hdr-icon">🚨</span>
+        <div>
+          <div class="alert-panel-hdr-title">Supervisor en Riesgo${delCount?` · El PH no cumple con la entrega`:''}</div>
+          <div class="alert-panel-hdr-sub">Acción requerida · Revisión inmediata</div>
+        </div>
+      </div>
+      <div class="alert-panel-hdr-badges">
+        ${redCount?`<span class="alert-count-badge red">🔴 ${redCount} Atrasado${redCount>1?'s':''}</span>`:''}
+        ${ambCount?`<span class="alert-count-badge amber">⚠️ ${ambCount} En Riesgo</span>`:''}
+        ${delCount?`<span class="alert-count-badge" style="background:rgba(124,58,237,.25);border:1px solid rgba(124,58,237,.5);color:#c4b5fd">⏰ ${delCount} Conflicto${delCount>1?'s':''} entrega</span>`:''}
+      </div>
+    </div>
+    ${riskSection}${deliverySection}
+  </div>`;
+}
+
+
+async function publishData(){
+  SYNC_CFG=loadSyncCfg();
+  if(!SYNC_CFG||!SYNC_CFG.url){
+    openSyncConfig();
+    return;
+  }
+  const ok=await syncPush(true);
+  showSyncToast(ok?'✅ Datos publicados. Todos los usuarios verán la información actualizada.':'❌ Error al publicar. Verifique la configuración de sincronización.');
+}
+
+// ── SYNC CONFIG MODAL ─────────────────────────────────────────────────────────
+function openSyncConfig(){
+  const cfg=loadSyncCfg()||{};
+  ge('sync-url').value=cfg.url||'';
+  ge('sync-key').value=cfg.apiKey||cfg.token||'';
+  ge('sync-modal').classList.add('show');
+}
+function closeSyncConfig(){ge('sync-modal').classList.remove('show');}
+function saveSyncConfigForm(){
+  const url=ge('sync-url').value.trim();
+  const apiKey=ge('sync-key').value.trim();
+  if(!url){alert('Ingrese la URL de sincronización.');return;}
+  // Detect provider
+  const provider=url.includes('workers.dev')?'cloudflare':url.includes('firebaseio')?'firebase':'jsonbin';
+  saveSyncCfg({url,apiKey,token:apiKey,provider});
+  closeSyncConfig();
+  showSyncToast('Configuración guardada');
+  setSyncIndicator('ok');
+}
+async function testSyncConnection(){
+  const url=ge('sync-url').value.trim();
+  const apiKey=ge('sync-key').value.trim();
+  if(!url){alert('Ingrese la URL primero.');return;}
+  saveSyncCfg({url,apiKey});
+  ge('sync-test-result').textContent='Probando...';
+  try{
+    const ep=syncEndpoints({url,apiKey});
+    const r=await fetch(ep.get,{headers:ep.getHeaders});
+    ge('sync-test-result').textContent=r.ok?'✅ Conexión exitosa ('+r.status+')':'⚠ Error: HTTP '+r.status;
+    ge('sync-test-result').style.color=r.ok?'#16a34a':'#dc2626';
+  }catch(e){
+    ge('sync-test-result').textContent='❌ Sin conexión: '+e.message;
+    ge('sync-test-result').style.color='#dc2626';
+  }
+}
+
+// ── NAV ───────────────────────────────────────────────────────────────────────
+function buildNav(){
+  const bar=ge('tabbar'),cnt=ge('tab-contents');
+  bar.innerHTML=''; cnt.innerHTML='';
+  const isComp=SESSION.role==='company'||SESSION.role==='asistente';
+  const isGerencia=SESSION.role==='gerencia'||SESSION.role==='admin';
+  const tabs=[];
+  if(isGerencia)tabs.push({id:'dash',label:'🏢 Dashboard'});
+  if(!isComp){tabs.push({id:'apa',label:'📋 Resumen APA'});tabs.push({id:'resumen',label:'📊 Resumen Ejecutivo'});}
+  const cos=EXCEL_DATA?Object.keys(EXCEL_DATA.companies):ALL_COMPANIES;
+  const shown=isComp?cos.filter(c=>c===SESSION.company):cos;
+  shown.forEach(co=>{
+    const hasPend=isGerencia&&PENDING_PROFILES[co]&&Object.keys(PENDING_PROFILES[co].projects||{}).length>0;
+    tabs.push({id:'co_'+slug(co),label:COMPANY_SHORT[co]||co,company:co,hasPend});
+  });
+  tabs.forEach(t=>{
+    const btn=document.createElement('button');
+    btn.className='tbtn'; btn.id='tbtn-'+t.id;
+    btn.innerHTML=t.label+(t.hasPend?'<span class="pend-dot" title="Actualización pendiente"></span>':'');
+    btn.onclick=()=>showTab(t.id); bar.appendChild(btn);
+    const div=document.createElement('div');
+    div.className='tab-content'; div.id='tab-'+t.id;
+    if(t.company)div.dataset.co=t.company;
+    if(t.id==='dash')div.innerHTML=renderDash();
+    else if(t.id==='apa')div.innerHTML=renderAPA();
+    else if(t.id==='resumen')div.innerHTML=renderResumen();
+    else if(t.company)div.innerHTML=renderCo(t.company);
+    cnt.appendChild(div);
+  });
+}
+function showTab(id){
+  _activeTab=id;
+  document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+  const btn=ge('tbtn-'+id),ct=ge('tab-'+id);
+  if(btn){btn.classList.add('active');btn.scrollIntoView({block:'nearest',inline:'nearest',behavior:'smooth'});}
+  if(ct)ct.classList.add('active');
+}
+
+// ── EXCEL PARSING ─────────────────────────────────────────────────────────────
+let _diagWB=null;
+
+function handleFile(inp){
+  const file=inp.files[0]; if(!file)return;
+  inp.value='';
+  showLoader('Cargando librería Excel...');
+  loadXLSX(()=>{
+    showLoader('Procesando archivo...');
+    const rd=new FileReader();
+    rd.onload=e=>{
+      try{
+        const wb=XLSX.read(e.target.result,{type:'array',cellDates:true});
+        _diagWB=wb;
+        EXCEL_DATA=parseGestor(wb);
+        EXCEL_DATA._ts=new Date().toISOString();
+        saveExcel(EXCEL_DATA);
+        const pubBtn=ge('publish-btn');
+        if(pubBtn&&SESSION.role==='admin')pubBtn.style.display='flex';
+        buildNav();
+        hideLoader();
+        syncPush(true);  // auto-sync to shared storage
+        const s=EXCEL_DATA.summary;
+        if(s.totalEmpresas===0||s.totalProyectos===0){
+          showDiagModal(wb,'El archivo se leyó correctamente pero no se encontraron empresas o proyectos. El parser necesita ajustarse a la estructura de este archivo.');
+        } else {
+          showTab(_activeTab.startsWith('co_')?_activeTab:'apa');
+          const m=EXCEL_DATA._meta;
+          const colInfo=`Columnas detectadas:\n  Presup.Inicial: ${m.colK>=0?'col '+(m.colK+1):'fallback'} | Variación: ${m.colL>=0?'col '+(m.colL+1):'fallback'} | Presup.Final: col ${(m.colM||0)+1}\n  OC Aprob: col ${(m.colO||0)+1} | Monto Campo: col ${(m.colW||0)+1} | Escala: ×${m.budgetScale}`;
+          alert('✅ Gestor cargado.\n'+s.totalProyectos+' proyectos · '+s.totalEmpresas+' empresas\nPresup.Final: '+fmtM(s.presFinal)+' | Campo: '+fmtPct(s.pctCampo)+'\nOC: '+fmtM(s.ocAprobadas)+'\n\n'+colInfo);
+        }
+      }catch(err){
+        hideLoader();
+        console.error(err);
+        if(_diagWB) showDiagModal(_diagWB,'Error al procesar: '+err.message);
+        else alert('Error al procesar el archivo:\n\n'+err.message);
+      }
+    };
+    rd.onerror=()=>{hideLoader();alert('Error al leer el archivo.');};
+    rd.readAsArrayBuffer(file);
+  });
+}
+
+// ── DIAGNOSTIC MODAL ──────────────────────────────────────────────────────────
+function colLetter(i){
+  if(i<26)return String.fromCharCode(65+i);
+  return String.fromCharCode(64+Math.floor(i/26))+String.fromCharCode(65+(i%26));
+}
+
+function buildDiagTable(ws){
+  const rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:'',raw:false});
+  const maxCols=Math.min(40,Math.max(0,...rows.slice(0,80).map(r=>r?r.length:0)));
+  const colLtrs=Array.from({length:maxCols},(_,i)=>colLetter(i));
+  const hdr=`<tr style="position:sticky;top:0;z-index:2;background:#f0f4f8">
+    <th style="padding:4px 8px;font-size:10px;color:#888;border:1px solid #ddd;min-width:30px;text-align:center;position:sticky;left:0;background:#f0f4f8;z-index:3">#</th>
+    ${colLtrs.map(l=>`<th style="padding:4px 6px;font-size:10px;font-weight:700;color:var(--primary);border:1px solid #ddd;text-align:center;min-width:90px">${l}</th>`).join('')}
+  </tr>`;
+  const bdy=rows.slice(0,80).map((row,ri)=>{
+    row=row||[];
+    const cells=colLtrs.map((_,ci)=>{
+      const v=String(row[ci]??'');
+      const has=v.trim()!=='';
+      const isNum=has&&!isNaN(v.replace(/[,$%]/g,''));
+      const bg=has?(isNum?'#f0fff4':'#fffff0'):'white';
+      const fc=isNum?'var(--green)':'var(--gray-800)';
+      return `<td style="padding:3px 5px;font-size:10px;border:1px solid #f0f0f0;background:${bg};color:${fc};font-weight:${has?500:400};max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${v.replace(/"/g,'&quot;')}">${v.slice(0,28)}</td>`;
+    }).join('');
+    const rowBg=ri%2===0?'white':'#fafafa';
+    return `<tr><td style="padding:3px 8px;font-size:10px;font-weight:600;color:#aaa;border:1px solid #ddd;text-align:center;position:sticky;left:0;background:${rowBg};z-index:1">${ri+1}</td>${cells}</tr>`;
+  }).join('');
+  return `<table style="border-collapse:collapse;white-space:nowrap;font-family:monospace">${hdr}${bdy}</table>`;
+}
+
+function showDiagModal(wb,msg){
+  hideLoader();
+  const firstSn=wb.SheetNames[0];
+  const sheetTabs=wb.SheetNames.map((s,i)=>`<span onclick="diagSwitch('${s.replace(/\\/g,'\\\\').replace(/'/g,"\\'")}')" id="dtab_${i}" style="cursor:pointer;display:inline-block;padding:4px 12px;border-radius:4px;font-size:12px;border:1px solid ${i===0?'var(--primary)':'var(--gray-200)'};background:${i===0?'var(--primary)':'white'};color:${i===0?'white':'var(--gray-600)'}">${esc(s)}</span>`).join('');
+
+  let dm=ge('diag-modal');
+  if(!dm){dm=document.createElement('div');dm.id='diag-modal';dm.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:3000;display:flex;align-items:flex-start;justify-content:center;padding:16px;overflow-y:auto';document.body.appendChild(dm);}
+
+  dm.innerHTML=`<div style="background:white;border-radius:12px;width:100%;max-width:1200px;margin:auto;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.35)">
+    <div style="background:var(--primary);color:white;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px">
+      <div><div style="font-size:15px;font-weight:700">🔍 Diagnóstico — Estructura del Excel</div>
+        <div style="font-size:11px;opacity:.7;margin-top:2px">Revise las filas y columnas para identificar la estructura del archivo.</div></div>
+      <button onclick="ge('diag-modal').style.display='none'" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:white;padding:6px 16px;border-radius:6px;cursor:pointer;font-size:13px;flex-shrink:0">✕ Cerrar</button>
+    </div>
+    <div style="padding:18px 20px">
+      <div style="background:#fff8e1;border:1px solid #f6e05e;border-radius:6px;padding:10px 14px;font-size:12px;color:var(--gray-700);margin-bottom:14px"><strong>ℹ️ </strong>${esc(msg||'')}</div>
+      <div style="margin-bottom:12px">
+        <div style="font-size:11px;font-weight:600;color:var(--gray-400);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Hojas en el archivo</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">${sheetTabs}</div>
+      </div>
+      <div id="diag-info" style="font-size:11px;color:var(--gray-500);margin-bottom:8px">Mostrando: <strong>${esc(firstSn)}</strong> · Primeras 80 filas · Amarillo = texto, Verde = número</div>
+      <div id="diag-wrap" style="overflow:auto;max-height:58vh;border:1px solid var(--gray-200);border-radius:6px">${buildDiagTable(wb.Sheets[firstSn])}</div>
+      <div style="margin-top:12px;padding:10px 14px;background:#ebf8ff;border:1px solid #bee3f8;border-radius:6px;font-size:12px;color:#2b6cb0">
+        <strong>📋 Siguiente paso:</strong> Tome una captura de pantalla de esta tabla e indique en qué <strong>fila y columna</strong> (A, B, C...) aparecen los nombres de empresa, proyectos y actividades. Con eso se ajusta el parser automáticamente.
+      </div>
+    </div>
+  </div>`;
+  dm.style.display='flex';
+}
+
+function diagSwitch(sheetName){
+  if(!_diagWB)return;
+  _diagWB.SheetNames.forEach((s,i)=>{
+    const t=ge('dtab_'+i);
+    if(!t)return;
+    const active=(s===sheetName);
+    t.style.background=active?'var(--primary)':'white';
+    t.style.color=active?'white':'var(--gray-600)';
+    t.style.borderColor=active?'var(--primary)':'var(--gray-200)';
+  });
+  const ws=_diagWB.Sheets[sheetName];
+  const wrap=ge('diag-wrap'),info=ge('diag-info');
+  if(ws&&wrap){wrap.innerHTML=buildDiagTable(ws);}
+  if(info)info.innerHTML=`Mostrando: <strong>${esc(sheetName)}</strong> · Primeras 80 filas · Amarillo = texto, Verde = número`;
+}
+
+// ── GESTOR PARSER — auto-detects column layout ────────────────────────────────
+function parseGestor(wb){
+  // Try to find the right sheet
+  const sn=wb.SheetNames.find(s=>/gestor|informe|resumen/i.test(s))||wb.SheetNames[0];
+  const ws=wb.Sheets[sn];
+  if(!ws)throw new Error('No se encontró ninguna hoja. Disponibles: '+wb.SheetNames.join(', '));
+
+  const rawN=XLSX.utils.sheet_to_json(ws,{header:1,defval:null,raw:true});
+
+  // ── STEP 1: detect column positions by scanning for "Nombre de Proyecto" ──
+  let iCo=-1,iD=-1,iF=-1,iH=-1,iJ=-1;
+  let iK=-1,iL=-1,iM=-1,iO=-1,iP=-1,iR=-1,iS=-1,iT=-1,iY=-1,iZ=-1,iW=-1;
+  let headerRow=-1;
+
+  for(let r=0;r<Math.min(rawN.length,120);r++){
+    const row=rawN[r]; if(!row)continue;
+    for(let c=0;c<row.length;c++){
+      const v=row[c];
+      if(typeof v==='string'&&v.trim().toLowerCase()==='nombre de proyecto'){
+        iD=c; headerRow=r;
+        // Company col: look left for non-null string
+        for(let lc=c-1;lc>=0;lc--){
+          if(row[lc]&&typeof row[lc]==='string'&&row[lc].trim()){iCo=lc;break;}
+        }
+        if(iCo<0)iCo=Math.max(0,c-2);
+        // Activity col: typically 2 cols right of project col
+        iF=c+2; iH=c+4; iJ=c+6;
+        break;
+      }
+    }
+    if(iD>=0)break;
+  }
+
+  // ── STEP 2: if "Nombre de Proyecto" not found, try scanning for company-like patterns ──
+  if(iD<0){
+    // Fallback: look for a row with a string in col 1 and "Nombre de Proyecto" in col 3
+    // or any row where a string cell is followed 2 cols later by another string header
+    // Try multiple column offsets (0,1,2) as fallback
+    for(const offset of [0,1,2,3]){
+      iCo=1+offset; iD=3+offset; iF=5+offset; iH=7+offset; iJ=9+offset;
+      // Verify by checking if any row has a non-total string at iD
+      let found=false;
+      for(let r=0;r<Math.min(rawN.length,200);r++){
+        const row=rawN[r]; if(!row)continue;
+        const v=row[iD];
+        if(typeof v==='string'&&v.trim()&&v.trim()!=='Total'&&v.trim()!=='Nombre de Proyecto'){
+          found=true; break;
+        }
+      }
+      if(found)break;
+    }
+  }
+
+  // ── STEP 3: detect numeric column positions by scanning header row area ──
+  // Look for a row containing typical financial column labels
+  const numKeywords={
+    'pres.*inic':null,'presupuesto inic':null,
+    'variaci':null,'var.*oc':null,
+    'pres.*final':null,'presupuesto final':null,
+    'oc.*aprob':null,'aprobad':null,'ordenes.*compra':null,
+    '% oc':null,'%oc':null,
+    'oc.*fact':null,'facturad':null,
+    'oc.*por.*fact':null,'por facturar':null,
+    'oc.*pag':null,'pagad':null,
+    '% av':null,'avance.*comp':null,
+    '% campo':null,'campo':null,
+    'monto.*campo':null,
+  };
+
+  // Search up to 30 rows below the header row for column label row
+  const scanStart=Math.max(0,headerRow-5);
+  const scanEnd=Math.min(rawN.length,headerRow+30);
+  for(let r=scanStart;r<scanEnd;r++){
+    const row=rawN[r]; if(!row)continue;
+    let matchCount=0;
+    for(let c=0;c<row.length;c++){
+      const v=row[c]; if(!v||typeof v!=='string')continue;
+      const vl=v.trim().replace(/[\n\r]+/g,' ').replace(/\s+/g,' ').toLowerCase();
+      for(const kw of Object.keys(numKeywords)){
+        if(new RegExp(kw,'i').test(vl)){matchCount++;break;}
+      }
+    }
+    if(matchCount>=3){
+      // This row has the column headers — map them
+      for(let c=0;c<row.length;c++){
+        const v=row[c]; if(!v||typeof v!=='string')continue;
+        const vl=v.trim().replace(/[\n\r]+/g,' ').replace(/\s+/g,' ').toLowerCase();
+        // Use vl (already trimmed+lowercased) and vlc (no-spaces version) for matching
+        const vlc=vl.replace(/\s+/g,'');
+        // Pres. Inicial — broad: "pres" + "ini" (matches "Pres. Ini.", "Presupuesto Inicial", "Pres. Inicio")
+        if(/pres.{0,20}ini/i.test(vl)&&iK<0&&!/%/.test(vl))iK=c;
+        // Variación OC — "vari" or "var." + optional "oc", exclude % columns
+        else if(/vari|var\..*oc|cambio.*oc/i.test(vl)&&iL<0&&!/%/.test(vl))iL=c;
+        // Pres. Final — broad
+        else if(/pres.{0,20}fin/i.test(vl)&&iM<0&&!/%/.test(vl))iM=c;
+        // OC Aprobadas (dollar amount) — must NOT be a % column or contain "diferencia"/"pagada"
+        // Matches "OC Aprobadas", "Total OC Aprobadas" — but NOT "% OC Aprobadas" or "% Diferencia entre OC..."
+        else if((/oc.{0,20}aprob/i.test(vl)||/ordenes.*compra/i.test(vl))&&!/^[%]|diferencia|pagada/i.test(vl)&&iO<0)iO=c;
+        // % OC / % Diferencia — percentage column
+        else if(/%.*oc|%.*dif/i.test(vl)&&iP<0)iP=c;
+        else if(/oc.*fact/i.test(vl)&&!/por.*fact|%/i.test(vl)&&iR<0)iR=c;
+        else if(/por.*fact/i.test(vl)&&iS<0)iS=c;
+        else if(/oc.*pag/i.test(vl)&&!/^[%]|diferencia/i.test(vl)&&iT<0)iT=c;
+        else if(/%.*av.*comp|avance.*comp/i.test(vl)&&iY<0)iY=c;
+        else if(/monto.*campo/i.test(vl)&&!/%/.test(vl)&&iW<0)iW=c;
+        else if(/%.*campo/i.test(vl)&&iZ<0)iZ=c;
+      }
+      break;
+    }
+  }
+
+  // ── STEP 4: fill in any still-missing indices with offsets from iD ──
+  const od=iD; // reference: project col
+  if(iK<0)iK=od+7;  if(iL<0)iL=od+8;  if(iM<0)iM=od+9;
+  if(iO<0)iO=od+11; if(iP<0)iP=od+12; if(iR<0)iR=od+14;
+  if(iS<0)iS=od+15; if(iT<0)iT=od+16; if(iY<0)iY=od+21;
+  if(iZ<0)iZ=od+22; if(iW<0)iW=od+23;
+
+  // ── STEP 5: parse rows ────────────────────────────────────────────────────
+  const companies={};
+  let curCo=null,curProj=null,curAct=null,pendTask=null;
+
+  for(let i=0;i<rawN.length;i++){
+    const row=rawN[i]; if(!row)continue;
+    const rCo=row[iCo],rD=row[iD],rF=row[iF],rH=row[iH],rJ=row[iJ];
+
+    // Detect company header: col iCo has company name AND col iD has 'Nombre de Proyecto'
+    if(rCo&&typeof rCo==='string'&&rCo.trim()&&rCo.trim()!=='Total'
+       &&rD&&typeof rD==='string'&&/nombre.*proyecto/i.test(rD.trim())){
+      curCo=rCo.trim();
+      if(!companies[curCo])companies[curCo]={name:curCo,projects:[],ac:0,cc:0};
+      curProj=null;curAct=null;pendTask=null;continue;
+    }
+    if(!curCo)continue;
+    if(rCo&&typeof rCo==='string'&&/^total/i.test(rCo.trim()))continue;
+
+    // Project row: iD has string name, iF empty
+    if(rD&&typeof rD==='string'&&rD.trim()&&!/^total/i.test(rD.trim())&&(!rF||rF==='')){
+      curProj={name:rD.trim(),activities:[],ac:0,cc:0};
+      companies[curCo].projects.push(curProj);
+      curAct=null;pendTask=null;continue;
+    }
+    if(!curProj)continue;
+    if(rD&&typeof rD==='string'&&/^total/i.test(rD.trim()))continue;
+
+    // Activity row: iF has string name, iD empty
+    if(rF&&typeof rF==='string'&&rF.trim()&&!/^total|^subtotal/i.test(rF.trim())&&!rD){
+      const pF=n(row[iM]),oA=n(row[iO]),mC=n(row[iW]);
+      // Guard against cumulative/total rows leaking through:
+      // If pF known: skip when oA > 10× budget (column clearly wrong)
+      // If pF=0 (not parsed): skip when oA > $1B (single activity can't have $1B OC without a budget)
+      if((pF>0&&oA>pF*10)||(pF===0&&oA>1e9)){pendTask=null;continue;}
+      // Clamp pctCampo to [0,1] — campo cannot exceed 100%
+      const pC=Math.min(1,pF>0?mC/pF:Math.min(1,n(row[iZ]))),pO=pF>0?oA/pF:n(row[iP]);
+      curAct={name:rF.trim(),presInicial:n(row[iK]),varOC:n(row[iL]),presFinal:pF,
+        ocAprobadas:oA,pctOC:pO,ocFact:n(row[iR]),ocPorFact:n(row[iS]),ocPag:n(row[iT]),
+        pctAvComp:n(row[iY]),pctCampo:pC,montoCampo:mC,ahorro:pF-oA,tasks:[]};
+      curProj.activities.push(curAct);
+      companies[curCo].ac++;curProj.ac++;
+      if(pC>=0.995){companies[curCo].cc++;curProj.cc++;}
+      pendTask=null;continue;
+    }
+    if(rF&&typeof rF==='string'&&/^total/i.test(rF.trim()))continue;
+
+    // Task name row
+    if(rH&&typeof rH==='string'&&rH.trim()&&(!rJ||rJ==='')){pendTask={name:rH.trim()};continue;}
+
+    // Task data row
+    if(rJ&&!rH&&curAct&&pendTask){
+      const pF=n(row[iM]),oA=n(row[iO]),mC=n(row[iW]);
+      const pC=pF>0?mC/pF:n(row[iZ]);
+      let fd='';
+      if(rJ instanceof Date)fd=rJ.toISOString().slice(0,10);
+      else if(typeof rJ==='string')fd=String(rJ).slice(0,10);
+      else if(typeof rJ==='number')fd=new Date(Math.round((rJ-25569)*864e5)).toISOString().slice(0,10);
+      curAct.tasks.push({name:pendTask.name,fechaInicio:fd,presInicial:n(row[iK]),varOC:n(row[iL]),
+        presFinal:pF,ocAprobadas:oA,pctOC:pF>0?oA/pF:n(row[iP]),pctCampo:pC,montoCampo:mC,ahorro:pF-oA});
+      pendTask=null;continue;
+    }
+  }
+
+  // ── STEP 6: aggregate presInicial + varOC + presFinal + OC + campo ────────
+  Object.values(companies).forEach(co=>{
+    co.projects=co.projects.filter(p=>p.name&&!/^total/i.test(p.name));
+    co.presInicial=0;co.varOC=0;co.presFinal=0;co.ocAprobadas=0;co.montoCampo=0;co.ahorroLineasCerradas=0;
+    co.projects.forEach(proj=>{
+      proj.presInicial=0;proj.varOC=0;proj.presFinal=0;proj.ocAprobadas=0;proj.montoCampo=0;proj.ahorroLineasCerradas=0;
+      proj.activities.forEach(a=>{
+        proj.presInicial+=a.presInicial;proj.varOC+=a.varOC;
+        proj.presFinal+=a.presFinal;proj.ocAprobadas+=a.ocAprobadas;proj.montoCampo+=a.montoCampo;
+        // Only count ahorro for fully closed activities (100% campo)
+        if(a.pctCampo>=0.995)proj.ahorroLineasCerradas+=a.ahorro;
+      });
+      proj.pctCampo=proj.presFinal>0?Math.min(1,proj.montoCampo/proj.presFinal):0;
+      proj.pctOC=proj.presFinal>0?proj.ocAprobadas/proj.presFinal:0;
+      proj.ahorro=proj.presFinal-proj.ocAprobadas;
+      co.presInicial+=proj.presInicial;co.varOC+=proj.varOC;
+      co.presFinal+=proj.presFinal;co.ocAprobadas+=proj.ocAprobadas;co.montoCampo+=proj.montoCampo;
+      co.ahorroLineasCerradas+=proj.ahorroLineasCerradas;
+    });
+    co.pctCampo=co.presFinal>0?Math.min(1,co.montoCampo/co.presFinal):0;
+    co.pctOC=co.presFinal>0?co.ocAprobadas/co.presFinal:0;
+    co.ahorro=co.presFinal-co.ocAprobadas;
+    co.lineasCerradas=co.cc||0;co.totalLineas=co.ac||0;
+  });
+
+  // ── STEP 7: Smart scale detection — only scale budget columns if needed ───
+  // Collect distribution of presFinal vs ocAprobadas at activity level
+  const pfSamples=[],oaSamples=[],mcSamples=[];
+  Object.values(companies).forEach(co=>co.projects.forEach(proj=>proj.activities.forEach(a=>{
+    if(a.presFinal>0&&a.presFinal<1e12)pfSamples.push(a.presFinal);
+    if(a.ocAprobadas>0&&a.ocAprobadas<1e12)oaSamples.push(a.ocAprobadas);
+    if(a.montoCampo>0&&a.montoCampo<1e12)mcSamples.push(a.montoCampo);
+  })));
+  const med=arr=>{if(!arr.length)return 0;const s=[...arr].sort((a,b)=>a-b);return s[Math.floor(s.length/2)];};
+  const medPF=med(pfSamples),medOA=med(oaSamples),medMC=med(mcSamples);
+
+  // If OA >> PF by factor >100, PF is in millions, OA in full dollars → scale PF only
+  let budgetScale=1;
+  if(medPF>0&&medOA>0&&medOA/medPF>100){
+    const exp=Math.round(Math.log10(medOA/medPF));
+    budgetScale=Math.pow(10,Math.max(2,Math.min(7,exp)));
+  } else if(medPF>0&&medMC>0&&medMC/medPF>100&&medOA===0){
+    const exp=Math.round(Math.log10(medMC/medPF));
+    budgetScale=Math.pow(10,Math.max(2,Math.min(7,exp)));
+  }
+
+  if(budgetScale>1){
+    // Scale ONLY budget columns: presInicial, varOC, presFinal (NOT ocAprobadas / montoCampo)
+    const scaleActBudget=a=>{
+      a.presInicial*=budgetScale;a.varOC*=budgetScale;a.presFinal*=budgetScale;
+      a.ahorro=a.presFinal-a.ocAprobadas;
+      a.pctOC=a.presFinal>0?a.ocAprobadas/a.presFinal:0;
+      a.pctCampo=a.presFinal>0?a.montoCampo/a.presFinal:0;
+    };
+    Object.values(companies).forEach(co=>{
+      co.projects.forEach(proj=>{
+        proj.activities.forEach(a=>{scaleActBudget(a);(a.tasks||[]).forEach(t=>{t.presInicial*=budgetScale;t.varOC=(t.varOC||0)*budgetScale;t.presFinal*=budgetScale;t.ahorro=t.presFinal-t.ocAprobadas;t.pctOC=t.presFinal>0?t.ocAprobadas/t.presFinal:0;t.pctCampo=t.presFinal>0?t.montoCampo/t.presFinal:0;});});
+        // Re-aggregate project from scaled activities
+        proj.presInicial=proj.activities.reduce((s,a)=>s+a.presInicial,0);
+        proj.varOC=proj.activities.reduce((s,a)=>s+a.varOC,0);
+        proj.presFinal=proj.activities.reduce((s,a)=>s+a.presFinal,0);
+        proj.ahorro=proj.presFinal-proj.ocAprobadas;
+        proj.pctOC=proj.presFinal>0?proj.ocAprobadas/proj.presFinal:0;
+        proj.pctCampo=proj.presFinal>0?proj.montoCampo/proj.presFinal:0;
+        proj.ahorroLineasCerradas=proj.activities.filter(a=>a.pctCampo>=0.995).reduce((s,a)=>s+a.ahorro,0);
+      });
+      // Re-aggregate company
+      co.presInicial=co.projects.reduce((s,p)=>s+p.presInicial,0);
+      co.varOC=co.projects.reduce((s,p)=>s+p.varOC,0);
+      co.presFinal=co.projects.reduce((s,p)=>s+p.presFinal,0);
+      co.ahorro=co.presFinal-co.ocAprobadas;
+      co.pctOC=co.presFinal>0?co.ocAprobadas/co.presFinal:0;
+      co.pctCampo=co.presFinal>0?Math.min(1,co.montoCampo/co.presFinal):0;
+      co.ahorroLineasCerradas=co.projects.reduce((s,p)=>s+(p.ahorroLineasCerradas||0),0);
+    });
+  }
+
+  // ── POST-SCALE SANITY: if OC > budget×2 at company level, the OC column is wrong ──
+  // Zero out OC for that company so the UI shows N/D instead of impossible values
+  Object.values(companies).forEach(co=>{
+    if(co.presFinal>0&&co.ocAprobadas>co.presFinal*2){
+      co._ocSuspect=true;
+      co.ocAprobadas=0;co.pctOC=0;co.ahorro=co.presFinal;
+      co.ahorroLineasCerradas=0;
+      co.projects.forEach(p=>{
+        p._ocSuspect=true;p.ocAprobadas=0;p.pctOC=0;p.ahorro=p.presFinal;
+        p.activities.forEach(a=>{a.ocAprobadas=0;a.pctOC=0;a.ahorro=a.presFinal;});
+      });
+    }
+  });
+
+  // ── STEP 8: global totals ─────────────────────────────────────────────────
+  let tP=0,tPI=0,tVO=0,tO=0,tC=0,tA=0,tCe=0,tAhLC=0;
+  Object.values(companies).forEach(co=>{
+    tPI+=co.presInicial;tVO+=co.varOC;tP+=co.presFinal;
+    tO+=co.ocAprobadas;tC+=co.montoCampo;tA+=co.totalLineas;tCe+=co.lineasCerradas;
+    tAhLC+=co.ahorroLineasCerradas||0;
+  });
+
+  const allProjs=[];
+  Object.values(companies).forEach(co=>{
+    co.projects.forEach(p=>allProjs.push({company:co.name,nombre:p.name,
+      presInicial:p.presInicial,varOC:p.varOC,presFinal:p.presFinal,
+      ocAprobadas:p.ocAprobadas,montoCampo:p.montoCampo,pctCampo:p.pctCampo,
+      pctOC:p.pctOC,ahorro:p.ahorro,ahorroLineasCerradas:p.ahorroLineasCerradas||0,
+      _ocSuspect:!!(p._ocSuspect||co._ocSuspect),actividades:p.activities.length,cerradas:p.cc||0}));
+  });
+
+  return {
+    _meta:{sheetName:sn,colCo:iCo,colProj:iD,colAct:iF,headerRow,colK:iK,colL:iL,colM:iM,colO:iO,colW:iW,budgetScale},
+    summary:{presInicial:tPI,varOC:tVO,presFinal:tP,ocAprobadas:tO,montoCampo:tC,
+      pctCampo:tP>0?tC/tP:0,pctOC:tP>0?tO/tP:0,ahorroTotal:tP-tO,
+      ahorroLineasCerradas:tAhLC,
+      lineasCerradas:tCe,totalLineas:tA,totalProyectos:allProjs.length,
+      totalEmpresas:Object.keys(companies).length,projects:allProjs},
+    companies
+  };
+}
+
+// ── SVG RING helper ───────────────────────────────────────────────────────────
+function svgRing(pct,color,size=80,stroke=8){
+  const r=(size-stroke)/2,cx=size/2,cy=size/2;
+  const circ=2*Math.PI*r;
+  const clampedPct=Math.min(1,Math.max(0,pct));
+  const dash=clampedPct*circ;
+  return `<svg class="apa-ring" viewBox="0 0 ${size} ${size}" width="${size}" height="${size}" style="transform:rotate(-90deg)">
+    <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#e5e7eb" stroke-width="${stroke}"/>
+    <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${color}" stroke-width="${stroke}"
+      stroke-dasharray="${dash.toFixed(1)} ${circ.toFixed(1)}" stroke-linecap="round"/>
+  </svg>`;
+}
+
+
+// ── RENDER: EXECUTIVE DASHBOARD ───────────────────────────────────────────────
+function renderDash(){
+  const now=new Date().toLocaleDateString('es-PA',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  const cos=EXCEL_DATA?Object.keys(EXCEL_DATA.companies):ALL_COMPANIES;
+
+  // Global KPIs
+  let totPres=0,totCampo=0,totOC=0,totAhorro=0,totalProj=0;
+  if(EXCEL_DATA){
+    const s=EXCEL_DATA.summary;
+    totPres=s.presFinal;totCampo=s.pctCampo;totOC=s.ocAprobadas;
+    totAhorro=s.ahorroLineasCerradas||0;totalProj=s.totalProyectos;
+  }
+
+  // Count risks
+  let permRiskCount=0,coordRiskCount=0,deliveryConflictCount=0;
+  cos.forEach(co=>{
+    const rl=permRiskLevel(co);
+    if(rl==='red'||rl==='amber')permRiskCount++;
+    const prof=PROFILES[co];
+    if(prof&&prof.projects){
+      if(Object.values(prof.projects).some(p=>p.riesgoRetraso))coordRiskCount++;
+      // Check delivery vs permit conflicts
+      if(PERMISOS_DATA){
+        const pprojs=getPermitProjects(co);
+        const deliveries=Object.values(prof.projects).map(p=>p.fechaEntregaActual||p.fechaEntregaOriginal).filter(Boolean);
+        if(pprojs.length&&deliveries.length){
+          const latestD=[...deliveries].sort().pop();
+          let conflict=false;
+          pprojs.forEach(pp=>{
+            const pd=PERMISOS_DATA.projects[pp]; if(!pd)return;
+            ['PH','OCP'].forEach(k=>{
+              const perm=pd[k];
+              if(perm&&perm.estado!=='COMPLETADO'&&(perm.fechaVenc||perm.fechaTerm)>(latestD||''))conflict=true;
+            });
+          });
+          if(conflict)deliveryConflictCount++;
+        }
+      }
+    }
+  });
+
+  // Permit alert section
+  let permAlerts='';
+  if(PERMISOS_DATA){
+    const alertItems=[];
+    cos.forEach(co=>{
+      const pprojs=getPermitProjects(co);
+      pprojs.forEach(pp=>{
+        const pd=PERMISOS_DATA.projects[pp]; if(!pd)return;
+        PERMIT_TYPES.forEach(pt=>{
+          const p=pd[pt.key];
+          if(p&&(p.estado==='ATRASADO'||p.estado==='EN RIESGO'))
+            alertItems.push({co,pp,pt,p});
+        });
+      });
+    });
+    if(alertItems.length){
+      permAlerts=`<div class="dash-section">
+        <div class="dash-section-title">🚨 Alertas de Permisos — ${alertItems.length} permiso${alertItems.length>1?'s':''} con riesgo</div>
+        <div style="background:#fef2f2;border:1px solid #fca5a5;border-left:4px solid #dc2626;border-radius:8px;padding:12px 16px">
+          ${alertItems.map(({co,pp,pt,p})=>`
+            <div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid #fecaca;flex-wrap:wrap">
+              <span style="font-size:18px">${pt.icon}</span>
+              <div style="flex:1;min-width:180px">
+                <div style="font-size:12px;font-weight:700;color:#991b1b">${esc(co)} — ${esc(pp)}</div>
+                <div style="font-size:11px;color:#7f1d1d">${pt.label}: <strong>${p.estado}</strong>${p.fechaVenc?' · Vence: '+p.fechaVenc:''}</div>
+              </div>
+              ${permBadge(p.estado)}
+            </div>`).join('')}
+        </div>
+      </div>`;
+    }
+  }
+
+  // Coordinator risk section
+  const coRiskList=cos.filter(co=>{
+    const prof=PROFILES[co];
+    return prof&&prof.projects&&Object.values(prof.projects).some(p=>p.riesgoRetraso);
+  });
+  let coordAlerts='';
+  if(coRiskList.length){
+    coordAlerts=`<div class="dash-section">
+      <div class="dash-section-title">⚠️ Riesgos Reportados por Coordinadores</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        ${coRiskList.map(co=>{
+          const prof=PROFILES[co];
+          const riskyProjs=Object.entries(prof.projects).filter(([,pd])=>pd.riesgoRetraso);
+          return `<div style="background:white;border:1px solid #fca5a5;border-left:3px solid #f59e0b;border-radius:6px;padding:10px 14px">
+            <div style="font-size:12px;font-weight:700;color:var(--gray-800);margin-bottom:4px">${esc(COMPANY_SHORT[co]||co)}</div>
+            ${riskyProjs.map(([pn,pd])=>`<div style="font-size:11px;color:#92400e;margin-top:3px">• <strong>${esc(pn)}</strong>${pd.riesgosDesc?' — '+esc(pd.riesgosDesc):''}</div>`).join('')}
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+  }
+
+  // Company cards
+  const coCards=cos.map(co=>{
+    const cd=EXCEL_DATA&&EXCEL_DATA.companies[co];
+    const prof=PROFILES[co];
+    const rl=permRiskLevel(co);
+    const riskClass=rl==='red'?'risk-red':rl==='amber'?'risk-amber':rl==='green'?'risk-green':'';
+    const riskPillColor=rl==='red'?'red':rl==='amber'?'amber':rl==='green'?'green':'gray';
+    const riskLabel=!PERMISOS_DATA?'—':rl==='red'?'🔴 Permiso atrasado':rl==='amber'?'🟡 En riesgo':rl==='green'?'✅ Permisos OK':'⚪ Sin datos';
+    // Check delivery conflicts for this company
+    let hasDeliveryConflict=false;
+    if(PERMISOS_DATA&&prof&&prof.projects){
+      const pprojs2=getPermitProjects(co);
+      const deliveries2=Object.values(prof.projects).map(p=>p.fechaEntregaActual||p.fechaEntregaOriginal).filter(Boolean);
+      if(pprojs2.length&&deliveries2.length){
+        const latestD=deliveries2.sort().pop();
+        pprojs2.forEach(pp=>{
+          const pd2=PERMISOS_DATA.projects[pp]; if(!pd2)return;
+          ['PH','OCP'].forEach(k=>{
+            const perm2=pd2[k];
+            if(perm2&&perm2.estado!=='COMPLETADO'&&(perm2.fechaVenc||perm2.fechaTerm)>(latestD||''))hasDeliveryConflict=true;
+          });
+        });
+      }
+    }
+    let lastUpdate='Sin actualización',coordName='—',hasRisk=false;
+    let statusSummary='';
+    if(prof&&prof.projects){
+      coordName=prof.adminName||'Coordinador';lastUpdate=fmtDate(prof.updatedAt)||'—';
+      hasRisk=Object.values(prof.projects).some(p=>p.riesgoRetraso);
+      // Build status counts from coordinator updates
+      const sc={en_construccion:0,sin_iniciar:0,construido_sin_vender:0,construido_tramite:0,entregado_garantia:0};
+      Object.values(prof.projects).forEach(p=>{if(p.estatus&&sc[p.estatus]!==undefined)sc[p.estatus]++;});
+      const parts=[];
+      if(sc.en_construccion)parts.push(`<span style="background:#eff6ff;color:#1d4ed8;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:600">▶ ${sc.en_construccion} en obra</span>`);
+      if(sc.construido_sin_vender)parts.push(`<span style="background:#fffbeb;color:#b45309;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:600">🏠 ${sc.construido_sin_vender} sin vender</span>`);
+      if(sc.construido_tramite)parts.push(`<span style="background:#f5f3ff;color:#6d28d9;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:600">📋 ${sc.construido_tramite} trámite</span>`);
+      if(sc.entregado_garantia)parts.push(`<span style="background:#ecfdf5;color:#047857;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:600">✅ ${sc.entregado_garantia} garantía</span>`);
+      if(sc.sin_iniciar)parts.push(`<span style="background:var(--gray-100);color:var(--gray-600);padding:2px 6px;border-radius:4px;font-size:10px;font-weight:600">○ ${sc.sin_iniciar} sin iniciar</span>`);
+      if(parts.length)statusSummary=`<div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:5px">${parts.join('')}</div>`;
+    }
+    const pres=cd?fmtM(cd.presFinal):'—';
+    const pctC=cd?fmtPct(cd.pctCampo):'—';
+    const oc=cd?(cd._ocSuspect?'N/D':fmtM(cd.ocAprobadas)):'—';
+    const projCount=cd?cd.projects.length:0;
+    const lcRatio=cd?cd.lineasCerradas+'/'+cd.totalLineas:'—';
+    // Permit mini-summary
+    const pprojs=getPermitProjects(co);
+    let permSummary='';
+    if(PERMISOS_DATA&&pprojs.length){
+      const badges=PERMIT_TYPES.map(pt=>{
+        let worstEst='SIN INICIAR',worstPrio=4;
+        pprojs.forEach(pp=>{
+          const pd=PERMISOS_DATA.projects[pp];
+          if(pd&&pd[pt.key]){const pr=PERMIT_STATUS_PRIORITY[pd[pt.key].estado]??4;if(pr<worstPrio){worstPrio=pr;worstEst=pd[pt.key].estado;}}
+        });
+        const css=PERMIT_STATUS_CSS[worstEst]||'perm-sininiciar';
+        return `<span class="perm-badge ${css}" title="${pt.label}">${pt.icon}</span>`;
+      }).join(' ');
+      permSummary=`<div style="padding:8px 0 2px;display:flex;gap:4px;flex-wrap:wrap;align-items:center"><span style="font-size:10px;color:var(--gray-400);margin-right:2px">Permisos:</span>${badges}</div>`;
+    }
+    return `<div class="dash-co-card ${riskClass}" onclick="showTab('co_${slug(co)}')" style="cursor:pointer;transition:transform .15s" onmouseenter="this.style.transform='translateY(-2px)'" onmouseleave="this.style.transform=''">
+      <div class="dash-co-hdr">
+        <span class="dash-co-name">${esc(COMPANY_SHORT[co]||co)}</span>
+        <span class="risk-pill ${riskPillColor}" style="font-size:9px">${riskLabel}</span>
+      </div>
+      <div class="dash-co-body">
+        <div class="dash-co-row"><label>Presupuesto Final</label><span>${pres}</span></div>
+        <div class="dash-co-row"><label>% Avance Campo</label><span>${pctC}</span></div>
+        <div class="dash-co-row"><label>OC Aprobadas</label><span>${oc}</span></div>
+        <div class="dash-co-row"><label>Proyectos / L.Cerradas</label><span>${projCount} proy · ${lcRatio} act.</span></div>
+        ${hasRisk?`<div class="dash-co-row"><label style="color:#c05621">⚠️ Riesgo de retraso</label><span style="color:#c05621;font-weight:600">Reportado por coord.</span></div>`:''}
+        <div class="dash-co-row"><label>Últ. actualización coord.</label><span style="font-size:10px;color:var(--gray-400)">${lastUpdate}</span></div>
+        ${hasDeliveryConflict?`<div class="dash-co-row" style="background:#ede9fe;margin:4px -14px;padding:5px 14px;border-left:3px solid #7c3aed"><label style="color:#4c1d95;font-weight:700">⏰ Conflicto entrega</label><span style="color:#4c1d95;font-weight:700">PH/OCP posterior</span></div>`:''}
+        ${statusSummary}
+        ${permSummary}
+      </div>
+    </div>`;
+  }).join('');
+
+  // Collapsible alert boxes for bottom of page
+  const permAlertsBox=permAlerts?`<details class="risk-details" style="margin-bottom:12px">
+    <summary class="risk-summary">
+      <span class="risk-summary-icon">🚨</span>
+      <span class="risk-summary-text"><strong>Alertas de Permisos — ${permAlerts.match(/permiso/g)?.length||0} permisos con riesgo</strong></span>
+      <span class="risk-summary-arrow">▼</span>
+    </summary>
+    <div class="risk-details-body">${permAlerts}</div>
+  </details>`:'';
+
+  const coordAlertsBox=coordAlerts?`<details class="risk-details" style="margin-bottom:12px;border-left-color:#d97706">
+    <summary class="risk-summary" style="background:linear-gradient(90deg,#fffbeb,#fff);border-color:#fde68a">
+      <span class="risk-summary-icon">⚠️</span>
+      <span class="risk-summary-text"><strong>Riesgos reportados por Coordinadores — ${coordRiskCount} empresa${coordRiskCount>1?'s':''}</strong></span>
+      <span class="risk-summary-arrow">▼</span>
+    </summary>
+    <div class="risk-details-body" style="border-color:#fde68a">${coordAlerts}</div>
+  </details>`:'';
+
+  return `
+    <div class="dash-header">
+      <h2>🏢 Dashboard Ejecutivo GLP</h2>
+      <p>${now} · Royal Pueblo Investment</p>
+    </div>
+    <div class="dash-kpi-row">
+      <div class="dash-kpi">
+        <div class="dash-kpi-val">${EXCEL_DATA?fmtM(totPres):'—'}</div>
+        <div class="dash-kpi-lbl">Presupuesto Total</div>
+      </div>
+      <div class="dash-kpi k-green">
+        <div class="dash-kpi-val">${EXCEL_DATA?fmtPct(totCampo):'—'}</div>
+        <div class="dash-kpi-lbl">Avance Campo Global</div>
+      </div>
+      <div class="dash-kpi ${permRiskCount>0?'k-red':'k-green'}">
+        <div class="dash-kpi-val">${permRiskCount}</div>
+        <div class="dash-kpi-lbl">Permisos en Riesgo</div>
+      </div>
+      <div class="dash-kpi ${coordRiskCount>0?'k-amber':''}">
+        <div class="dash-kpi-val">${coordRiskCount}</div>
+        <div class="dash-kpi-lbl">Riesgos de Coord.</div>
+      </div>
+      ${deliveryConflictCount>0?`<div class="dash-kpi" style="border-top-color:#7c3aed;grid-column:span 2">
+        <div class="dash-kpi-val" style="color:#7c3aed;font-size:22px">${deliveryConflictCount}</div>
+        <div class="dash-kpi-lbl">⏰ PH/Ocupación no cumple con fecha de entrega</div>
+      </div>`:''}
+    </div>
+    ${!EXCEL_DATA?`<div class="up-banner" style="margin-bottom:14px"><h3>📁 Sin datos del Gestor</h3>
+      <p>Cargue el archivo Excel del Gestor de Proyectos para ver datos financieros.</p>
+      <label class="up-lbl">📂 Cargar archivo<input type="file" accept=".xlsx,.xls" style="display:none" onchange="handleFile(this)"></label></div>`:''}
+    <div class="dash-section">
+      <div class="dash-section-title">🏗 Estado por Empresa — ${cos.length} empresas</div>
+      <div class="dash-co-grid">${coCards}</div>
+    </div>
+    ${permAlertsBox}
+    ${coordAlertsBox}
+    ${!PERMISOS_DATA?`<div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:12px 16px;margin-top:8px;font-size:12px;color:#1e40af">
+      💡 <strong>Permisos:</strong> La Gerencia de Permisos puede cargar el Reporte de Permisos usando el botón "📋 Permisos" para activar los indicadores de permisos.
+    </div>`:''}
+  `;
+}
+
+// ── RENDER: RESUMEN APA ───────────────────────────────────────────────────────
+function renderAPA(){
+  const cos=EXCEL_DATA?Object.keys(EXCEL_DATA.companies):ALL_COMPANIES;
+
+  if(!EXCEL_DATA) return `
+    <div class="up-banner"><h3>📁 Cargar Gestor de Proyectos</h3>
+      <p>Cargue el archivo <strong>Informe Resumen de Gestor de Proyecto.xlsx</strong> exportado de SAP.</p>
+      <label class="up-lbl">📂 Seleccionar archivo<input type="file" accept=".xlsx,.xls" style="display:none" onchange="handleFile(this)"></label>
+    </div>`;
+
+  const s=EXCEL_DATA.summary;
+  // ── Global KPI banner ────────────────────────────────────────────────────
+  const globalCampoColor=s.pctCampo>=0.8?'var(--green)':s.pctCampo>=0.5?'var(--orange)':'var(--red)';
+  const globalOCColor=s.pctOC<=1?'var(--green)':s.pctOC<=1.1?'var(--orange)':'var(--red)';
+  const varOCColor=(s.varOC||0)>0?'#fbd38d':'#9ae6b4';
+  const globalBanner=`
+    <div style="background:linear-gradient(135deg,var(--primary) 0%,var(--primary-lt) 100%);border-radius:12px;padding:20px 24px;margin-bottom:18px;color:white">
+      <div style="display:flex;flex-wrap:wrap;gap:20px;align-items:center;margin-bottom:16px">
+        <div style="flex:1;min-width:160px">
+          <div style="font-size:11px;opacity:.6;text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px">Consolidado Global</div>
+          <div style="font-size:22px;font-weight:800">${fmtM(s.presFinal)}</div>
+          <div style="font-size:11px;opacity:.7;margin-top:2px">${s.totalProyectos} proyectos · ${s.totalEmpresas} empresas</div>
+        </div>
+        <div style="display:flex;gap:20px;flex-wrap:wrap">
+          <div style="text-align:center">
+            <div style="font-size:20px;font-weight:800;color:${globalCampoColor==='var(--green)'?'#9ae6b4':globalCampoColor==='var(--orange)'?'#fbd38d':'#feb2b2'}">${fmtPct(s.pctCampo)}</div>
+            <div style="font-size:10px;opacity:.65;margin-top:2px">Avance Campo</div>
+          </div>
+          <div style="text-align:center">
+            <div style="font-size:20px;font-weight:800;color:#c6f6d5">${fmtM(s.ocAprobadas)}</div>
+            <div style="font-size:10px;opacity:.65;margin-top:2px">OC Aprobadas</div>
+          </div>
+          <div style="text-align:center">
+            <div style="font-size:20px;font-weight:800;color:${(s.ahorroLineasCerradas||0)>=0?'#9ae6b4':'#feb2b2'}">${(s.ahorroLineasCerradas||0)>=0?'+':''}${fmtM(s.ahorroLineasCerradas||0)}</div>
+            <div style="font-size:10px;opacity:.65;margin-top:2px">Ahorro (L. Cerradas)</div>
+          </div>
+          <div style="text-align:center">
+            <div style="font-size:20px;font-weight:800;color:#e9d8fd">${s.lineasCerradas}/${s.totalLineas}</div>
+            <div style="font-size:10px;opacity:.65;margin-top:2px">Líneas Cerradas</div>
+          </div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;border-top:1px solid rgba(255,255,255,.15);padding-top:14px">
+        <div style="background:rgba(255,255,255,.1);border-radius:8px;padding:10px 14px">
+          <div style="font-size:10px;opacity:.6;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Presupuesto Inicial</div>
+          <div style="font-size:18px;font-weight:700">${fmtM(s.presInicial||0)}</div>
+        </div>
+        <div style="background:rgba(255,255,255,.1);border-radius:8px;padding:10px 14px">
+          <div style="font-size:10px;opacity:.6;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Variación (Órdenes de Cambio)</div>
+          <div style="font-size:18px;font-weight:700;color:${varOCColor}">${(s.varOC||0)>=0?'+':''}${fmtM(s.varOC||0)}</div>
+        </div>
+        <div style="background:rgba(255,255,255,.15);border-radius:8px;padding:10px 14px;border:1px solid rgba(255,255,255,.25)">
+          <div style="font-size:10px;opacity:.6;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Presupuesto Final</div>
+          <div style="font-size:18px;font-weight:800">${fmtM(s.presFinal)}</div>
+        </div>
+      </div>
+    </div>`;
+
+  // ── Cards ────────────────────────────────────────────────────────────────
+  const cards=cos.map(co=>{
+    const cd=EXCEL_DATA.companies[co];
+    const prof=PROFILES[co];
+    const canUpd=SESSION.role==='company'&&SESSION.company===co;
+    if(!cd) return '';
+
+    const pres=cd.presFinal,pctC=cd.pctCampo,pctO=cd.pctOC;
+    const ahLC=cd.ahorroLineasCerradas||0;
+    const ocSuspect=!!cd._ocSuspect;
+    const pctCpct=Math.min(100,pctC*100);
+    const pctOValid=!ocSuspect&&pctO>0&&pctO<=2;
+    const pctOpct=pctOValid?Math.min(100,pctO*100):0;
+    const isOver=ahLC<0,isOverOC=pctOValid&&pctO>1.05;
+    const ahorroRatio=pres>0?Math.abs(ahLC)/pres:0;
+    let hdrClass='hdr-blue';
+    if(!isOver&&pctC>0.5)hdrClass='hdr-green';
+    else if(isOver&&ahorroRatio>0.1)hdrClass='hdr-red';
+    else if(isOver)hdrClass='hdr-orange';
+    const statusTxt=pctC>=0.995?'✓ Completo':pctC>=0.5?'▶ En Curso':pctC>0.01?'◐ Iniciado':'○ Sin Iniciar';
+    const ringColor=pctC>=0.8?'#48bb78':pctC>=0.5?'#ed8936':'#e53e3e';
+    const ocFillCls=isOverOC?'r':'o';
+    const ocOverMarker=isOverOC?'<div class="apa-over-marker"></div>':'';
+
+    // ── PERMIT STATUS ROW ──
+    const pprojs=getPermitProjects(co);
+    let permitRow='';
+    if(PERMISOS_DATA&&pprojs.length){
+      const permCells=PERMIT_TYPES.map(pt=>{
+        let worstEst='SIN INICIAR',worstPrio=4;
+        pprojs.forEach(pp=>{
+          const pd=PERMISOS_DATA.projects[pp];
+          if(pd&&pd[pt.key]){const pr=PERMIT_STATUS_PRIORITY[pd[pt.key].estado]??4;if(pr<worstPrio){worstPrio=pr;worstEst=pd[pt.key].estado;}}
+        });
+        const css=PERMIT_STATUS_CSS[worstEst]||'perm-sininiciar';
+        const lbl=worstEst==='SIN INICIAR'?'S/I':worstEst==='COMPLETADO'?'OK':worstEst==='EN RIESGO'?'RIESGO':worstEst;
+        return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px">
+          <span style="font-size:14px">${pt.icon}</span>
+          <span class="perm-badge ${css}" style="font-size:8px;padding:1px 4px;white-space:nowrap">${lbl}</span>
+          <span style="font-size:8px;color:var(--gray-400);text-align:center;line-height:1.2">${pt.label}</span>
+        </div>`;
+      }).join('');
+      permitRow=`<div style="border-top:1px solid var(--gray-100);padding:8px 0 4px;margin-top:4px">
+        <div style="font-size:9px;font-weight:700;color:#3730a3;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">📋 Estado de Permisos</div>
+        <div style="display:flex;gap:4px">${permCells}</div>
+      </div>`;
+    }
+
+    // ── PER-PROJECT MINI BARS (up to 5) ──
+    const topProjs=cd.projects.slice(0,5);
+    const projBars=topProjs.map(p=>{
+      const pct=Math.min(100,p.pctCampo*100);
+      const bClr=pct>=80?'#48bb78':pct>=40?'#ed8936':'#e53e3e';
+      const ppd=prof&&prof.projects&&prof.projects[p.name];
+      const riskDot=ppd&&ppd.riesgoRetraso?'<span style="color:var(--red);font-size:9px;margin-left:2px">⚠</span>':'';
+      return `<div style="display:flex;align-items:center;gap:6px;margin-bottom:3px">
+        <div style="flex:1;min-width:0;font-size:10px;color:var(--gray-600);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(p.name)}${riskDot}</div>
+        <div style="width:55px;height:5px;background:var(--gray-100);border-radius:3px;flex-shrink:0;overflow:hidden">
+          <div style="width:${pct.toFixed(1)}%;height:100%;background:${bClr};border-radius:3px"></div>
+        </div>
+        <div style="font-size:10px;font-weight:700;color:var(--gray-700);min-width:28px;text-align:right">${pct.toFixed(0)}%</div>
+      </div>`;
+    }).join('');
+    const extraProjs=cd.projects.length>5?`<div style="font-size:10px;color:var(--gray-400);margin-top:2px">+${cd.projects.length-5} proyecto${cd.projects.length-5>1?'s':''} más</div>`:'';
+
+    // ── COORDINATOR SECTION ──
+    let coordSection='';
+    if(prof){
+      const hasRisk=Object.values(prof.projects||{}).some(p=>p.riesgoRetraso);
+      let totUC=0,totUV=0,totUT=0,totUG=0;
+      Object.values(prof.projects||{}).forEach(pd=>{totUC+=pd.unConstruccion||0;totUV+=pd.unSinVender||0;totUT+=pd.unTramite||0;totUG+=pd.unGarantia||0;});
+      const totU=totUC+totUV+totUT+totUG;
+      const uChips=totU>0?`<div style="display:flex;gap:3px;flex-wrap:wrap;margin-top:3px">
+        ${totUC>0?`<span class="upd-unit-chip uc" style="font-size:9px;padding:1px 5px">🏗 ${totUC}</span>`:''}
+        ${totUV>0?`<span class="upd-unit-chip uv" style="font-size:9px;padding:1px 5px">🏠 ${totUV}</span>`:''}
+        ${totUT>0?`<span class="upd-unit-chip ut" style="font-size:9px;padding:1px 5px">📋 ${totUT}</span>`:''}
+        ${totUG>0?`<span class="upd-unit-chip ug" style="font-size:9px;padding:1px 5px">✅ ${totUG}</span>`:''}
+      </div>`:'';
+      coordSection=`<div style="border-top:1px solid var(--gray-100);padding:8px 0 0;margin-top:4px;display:flex;align-items:flex-start;justify-content:space-between;gap:6px;flex-wrap:wrap">
+        <div style="flex:1;min-width:0">
+          <div style="font-size:10px;font-weight:600;color:var(--gold)">✏️ ${esc(prof.adminName||'Coordinador')}</div>
+          <div style="font-size:9px;color:var(--gray-400);margin-top:1px">${fmtDate(prof.updatedAt)}</div>
+          ${uChips}
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex-shrink:0">
+          ${hasRisk?`<span class="apa-chip re" style="font-size:9px;padding:2px 6px">⚠️ Riesgo</span>`:`<span class="apa-chip gr" style="font-size:9px;padding:2px 6px">✓ OK</span>`}
+          ${canUpd?`<button class="rbtn rno" style="font-size:10px;padding:2px 8px;margin-top:1px" onclick="event.stopPropagation();openModal('${esc(co).replace(/'/g,"&#39;")}')">✏️</button>`:''}
+        </div>
+      </div>`;
+    } else {
+      coordSection=`<div style="border-top:1px solid var(--gray-100);padding:8px 0 0;margin-top:4px;display:flex;align-items:center;justify-content:space-between">
+        <span style="font-size:10px;color:var(--gray-400)">Sin actualización coord.</span>
+        ${canUpd?`<button class="rbtn rno" style="font-size:10px;padding:2px 8px" onclick="event.stopPropagation();openModal('${esc(co).replace(/'/g,"&#39;")}')">✏️ Actualizar</button>`:''}
+      </div>`;
+    }
+
+    return `<div class="apa-card" onclick="showTab('co_${slug(co)}')">
+      <div class="apa-chdr ${hdrClass}">
+        <span class="apa-hdr-badge">${statusTxt}</span>
+        <div class="apa-co">${esc(co)}</div>
+        <div class="apa-sub">${cd.projects.length} proy. · ${fmtM(pres)} · ${cd.lineasCerradas}/${cd.totalLineas} cerradas</div>
+      </div>
+      <div class="apa-cbody">
+        <div class="apa-main-row">
+          <div class="apa-ring-wrap">
+            ${svgRing(pctC,ringColor)}
+            <div class="apa-ring-center">
+              <div class="apa-ring-pct">${pctCpct.toFixed(0)}%</div>
+              <div class="apa-ring-lbl">Campo</div>
+            </div>
+          </div>
+          <div class="apa-kpi-col">
+            <div class="apa-kpi-item">
+              <span class="apa-kpi-lbl">Pres. Inicial</span>
+              <span class="apa-kpi-val">${fmtM(cd.presInicial||0)}</span>
+            </div>
+            <div class="apa-kpi-item">
+              <span class="apa-kpi-lbl">Variación OC</span>
+              <span class="apa-kpi-val" style="color:${(cd.varOC||0)<0?'var(--red)':(cd.varOC||0)>0?'var(--orange)':'var(--gray-600)'}">${(cd.varOC||0)>=0?'+':''}${fmtM(cd.varOC||0)}</span>
+            </div>
+            <div class="apa-kpi-item">
+              <span class="apa-kpi-lbl">Pres. Final</span>
+              <span class="apa-kpi-val" style="font-weight:800">${fmtM(pres)}</span>
+            </div>
+          </div>
+        </div>
+        <div class="apa-bars-section">
+          <div class="apa-bar2">
+            <div class="apa-bar2-hdr">
+              <span class="apa-bar2-lbl">⛏ Avance Campo</span>
+              <span class="apa-bar2-pct" style="color:${ringColor}">${fmtPct(pctC)} · ${fmtM(cd.montoCampo)}</span>
+            </div>
+            <div class="apa-bar2-track"><div class="apa-bar2-fill g" style="width:${pctCpct.toFixed(1)}%"></div></div>
+          </div>
+          <div class="apa-bar2">
+            <div class="apa-bar2-hdr">
+              <span class="apa-bar2-lbl">🛒 OC Aprobadas</span>
+              <span class="apa-bar2-pct" style="color:${isOverOC?'var(--red)':ocSuspect?'var(--gray-400)':'var(--orange)'}">
+                ${ocSuspect?'N/D':fmtM(cd.ocAprobadas)+(pctOValid?' ('+fmtPct(pctO)+')':'')}${isOverOC?' ⚠️':''}
+              </span>
+            </div>
+            ${pctOValid?`<div class="apa-bar2-track"><div class="apa-bar2-fill ${ocFillCls}" style="width:${pctOpct.toFixed(1)}%"></div>${ocOverMarker}</div>`:''}
+          </div>
+        </div>
+        <div class="apa-chips-row" style="margin-bottom:2px">
+          ${cd.lineasCerradas>0&&!ocSuspect?`<span class="apa-chip ${isOver?'re':'gr'}">${isOver?'▼':'▲'} Ahorro: ${isOver?'':'+'}${fmtM(ahLC)}</span>`:(cd.lineasCerradas>0?'':`<span class="apa-chip gy">Sin líneas cerradas</span>`)}
+          ${isOverOC?'<span class="apa-chip re">⚠️ OC excede presup.</span>':''}
+          ${ocSuspect?'<span class="apa-chip or">⚠️ OC no detectada</span>':''}
+        </div>
+        ${permitRow}
+        ${cd.projects.length?`<div style="border-top:1px solid var(--gray-100);padding:8px 0 4px;margin-top:4px">
+          <div style="font-size:9px;font-weight:700;color:var(--gray-600);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px">🏗 Proyectos — % Avance Campo</div>
+          ${projBars}${extraProjs}
+        </div>`:''}
+        ${coordSection}
+      </div>
+    </div>`;
+  }).join('');
+
+  return `<div style="margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+    <div><h2 style="font-size:16px;font-weight:700;color:var(--gray-800)">Resumen por Empresa (APA)</h2>
+    <p style="font-size:12px;color:var(--gray-400);margin-top:2px">Vista consolidada · Click en una tarjeta para ver el detalle</p></div>
+  </div>${globalBanner}<div class="apa-grid">${cards}</div>`;
+}
+
+// ── RENDER: RESUMEN EJECUTIVO ─────────────────────────────────────────────────
+function renderResumen(){
+  if(!EXCEL_DATA)return `<div class="up-banner"><h3>📁 Cargar Gestor de Proyectos</h3>
+    <p>Use el botón en la barra superior para cargar el informe exportado de SAP.</p>
+    <label class="up-lbl">📂 Seleccionar<input type="file" accept=".xlsx,.xls" style="display:none" onchange="handleFile(this)"></label></div>
+    <div class="empty"><h3>Sin datos</h3><p>Cargue el archivo Excel del Gestor de Proyectos.</p></div>`;
+  const s=EXCEL_DATA.summary,ps=s.projects||[];
+  return `<div class="kpi4">
+    <div class="kcard"><div class="klbl">Presupuesto Final</div><div class="kval">${fmtM(s.presFinal)}</div><div class="ksub">Incl. órdenes de cambio aprobadas</div></div>
+    <div class="kcard green"><div class="klbl">Avance Campo</div><div class="kval">${fmtPct(s.pctCampo)}</div><div class="ksub">${fmtM(s.montoCampo)} ejecutado</div></div>
+    <div class="kcard gold"><div class="klbl">OC Aprobadas</div><div class="kval">${fmtM(s.ocAprobadas)}</div><div class="ksub">${s.pctOC>0&&s.pctOC<=2?fmtPct(s.pctOC)+' del presupuesto':'N/D'}</div></div>
+    <div class="kcard purple"><div class="klbl">Líneas Cerradas</div><div class="kval">${s.lineasCerradas}/${s.totalLineas}</div><div class="ksub">Actividades al 100%</div></div>
+  </div>
+  <div class="sbar">
+    <div class="sitem"><div class="sval">${s.totalProyectos}</div><div class="slbl">Proyectos</div></div>
+    <div class="sitem"><div class="sval">${s.totalEmpresas}</div><div class="slbl">Empresas</div></div>
+    <div class="sitem"><div class="sval">${fmtM(s.montoCampo)}</div><div class="slbl">Monto ejecutado</div></div>
+    <div class="sitem"><div class="sval" style="${(s.ahorroLineasCerradas||0)<0?'color:var(--red)':'color:var(--green)'}">${s.lineasCerradas>0?fmtM(s.ahorroLineasCerradas||0):'—'}</div><div class="slbl">Ahorro (L.Cerradas)</div></div>
+  </div>
+  <div class="twrap">
+    <div class="thead">
+      <div class="ttitle">Todos los Proyectos (${ps.length})</div>
+      <input class="tsearch" type="text" placeholder="Buscar proyecto o empresa..." oninput="filterTbl(this.value)">
+    </div>
+    <div style="overflow-x:auto"><table>
+      <thead><tr>
+        <th onclick="sortTbl(0)" id="th0">Empresa</th>
+        <th onclick="sortTbl(1)" id="th1">Proyecto</th>
+        <th onclick="sortTbl(2)" id="th2" style="text-align:right">Pres. Final</th>
+        <th onclick="sortTbl(3)" id="th3" style="text-align:right">OC Aprobadas</th>
+        <th onclick="sortTbl(4)" id="th4" style="text-align:right">Monto Campo</th>
+        <th onclick="sortTbl(5)" id="th5">% Campo</th>
+        <th onclick="sortTbl(6)" id="th6">% OC</th>
+        <th onclick="sortTbl(7)" id="th7" style="text-align:right">Ahorro</th>
+        <th onclick="sortTbl(8)" id="th8">Estado</th>
+      </tr></thead>
+      <tbody id="tbl-body">${tblRows(ps)}</tbody>
+    </table></div>
+  </div>`;
+}
+function tblRows(data){
+  if(!data.length)return '<tr><td colspan="9" style="text-align:center;padding:20px;color:var(--gray-400)">Sin resultados</td></tr>';
+  return data.map(p=>{const a=p.ahorro||0;return `<tr>
+    <td style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(COMPANY_SHORT[p.company]||p.company)}</td>
+    <td style="font-weight:500;max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${esc(p.nombre)}">${esc(p.nombre)}</td>
+    <td class="tr amt">${fmtM(p.presFinal)}</td><td class="tr amt">${p._ocSuspect?'N/D':fmtM(p.ocAprobadas)}</td>
+    <td class="tr amt">${fmtM(p.montoCampo)}</td>
+    <td style="min-width:110px">${pbar(p.pctCampo,'g')}</td>
+    <td style="min-width:90px">${p._ocSuspect||p.pctOC>2?'<span style="color:var(--gray-400);font-size:11px">N/D</span>':pbar(p.pctOC,'o')}</td>
+    <td class="tr amt ${(p.ahorroLineasCerradas||0)>=0?'pos':'neg'}">${p.cerradas>0?(((p.ahorroLineasCerradas||0)>=0?'+':'')+fmtM(p.ahorroLineasCerradas||0)):'—'}</td>
+    <td>${estadoBadge(p.pctCampo)}</td>
+  </tr>`;}).join('');
+}
+function filterTbl(q){
+  _searchQ=q.toLowerCase();
+  const ps=EXCEL_DATA&&EXCEL_DATA.summary&&EXCEL_DATA.summary.projects||[];
+  let f=ps;
+  if(_searchQ)f=ps.filter(p=>(p.company||'').toLowerCase().includes(_searchQ)||(p.nombre||'').toLowerCase().includes(_searchQ));
+  if(_sortCol>=0)f=sortPs(f,_sortCol,_sortAsc);
+  const b=ge('tbl-body');if(b)b.innerHTML=tblRows(f);
+}
+function sortTbl(col){
+  document.querySelectorAll('thead th').forEach((t,i)=>{t.className=i===col?(_sortCol===col&&_sortAsc?'sd':'sa'):'';});
+  if(_sortCol===col)_sortAsc=!_sortAsc;else{_sortCol=col;_sortAsc=true;}
+  filterTbl(_searchQ);
+}
+function sortPs(data,col,asc){
+  const ks=['company','nombre','presFinal','ocAprobadas','montoCampo','pctCampo','pctOC','ahorro','pctCampo'];
+  const k=ks[col];
+  return [...data].sort((a,b)=>{let va=a[k]??'',vb=b[k]??'';if(typeof va==='string')va=va.toLowerCase();if(typeof vb==='string')vb=vb.toLowerCase();return asc?(va>vb?1:va<vb?-1:0):(va<vb?1:va>vb?-1:0);});
+}
+
+// ── RENDER: COMPANY TAB ───────────────────────────────────────────────────────
+function renderCo(co){
+  const cd=EXCEL_DATA&&EXCEL_DATA.companies[co];
+  const prof=PROFILES[co];
+  const isGer=SESSION.role==='gerencia'||SESSION.role==='admin';
+  const canUpd=(SESSION.role==='company'||SESSION.role==='asistente')&&SESSION.company===co;
+  const updLbl=SESSION.role==='asistente'?'✏️ Enviar Actualización':'✏️ Actualizar proyectos';
+  const updBtn=canUpd?`<button class="co-upd-btn" onclick="openModal('${esc(co).replace(/'/g,'&#39;')}')">${updLbl}</button>`:'';
+  const sub=cd?fmtM(cd.presFinal)+' presupuesto · '+cd.projects.length+' proyectos':'Sin datos — cargue el Gestor de Proyectos';
+  let h=`<div class="co-hero"><div><h2>${esc(co)}</h2><p>${sub}</p></div>${updBtn}</div>`;
+  if(prof){
+    const chips=Object.keys(prof.projects||{}).map(pn=>`<span class="coord-proj-chip">${esc(pn)}</span>`).join('');
+    h+=`<div class="coord-info"><div><div class="coord-lbl">Última Actualización del Coordinador</div>
+      <div class="coord-name">${esc(prof.adminName||'Coordinador')}</div>
+      <div class="coord-date">${fmtDate(prof.updatedAt)}</div></div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">${chips}</div></div>`;
+  }
+  if(!cd){h+=renderCoProf(co);h+=`<div class="empty"><h3>Sin datos del Gestor</h3><p>Cargue el archivo "Informe Resumen de Gestor de Proyecto" para ver costos y actividades.</p></div>`;return h;}
+  const isNeg=cd.ahorro<0;
+  const mini=cd.projects.slice(0,15).map(p=>`<div class="pm-item"><span class="pm-name" title="${esc(p.name)}">${esc(p.name)}</span><span class="pm-pct">${fmtPct(p.pctCampo)}</span></div>`).join('');
+  h+=`<div class="co-layout"><div>
+    <div class="kpi4">
+      <div class="kcard"><div class="klbl">Presupuesto Final</div><div class="kval">${fmtM(cd.presFinal)}</div><div class="ksub">Incl. órdenes de cambio</div></div>
+      <div class="kcard green"><div class="klbl">% Avance Campo</div><div class="kval">${fmtPct(cd.pctCampo)}</div><div class="ksub">${fmtM(cd.montoCampo)} ejecutado</div></div>
+      <div class="kcard gold"><div class="klbl">OC Aprobadas</div><div class="kval">${cd._ocSuspect?'N/D':fmtM(cd.ocAprobadas)}</div><div class="ksub">${cd._ocSuspect?'Columna no detectada':cd.pctOC>0&&cd.pctOC<=2?fmtPct(cd.pctOC)+' del presup.':fmtM(cd.ocAprobadas)}</div></div>
+      <div class="kcard purple"><div class="klbl">Líneas Cerradas</div><div class="kval">${cd.lineasCerradas}/${cd.totalLineas}</div><div class="ksub">Actividades al 100%</div></div>
+    </div>
+    <div class="sbar" style="margin-top:10px">
+      <div class="sitem"><div class="sval">${cd.projects.length}</div><div class="slbl">Proyectos</div></div>
+      <div class="sitem"><div class="sval">${fmtM(cd.montoCampo)}</div><div class="slbl">Monto Campo</div></div>
+      <div class="sitem"><div class="sval">${cd._ocSuspect?'N/D':fmtM(cd.ocAprobadas)}</div><div class="slbl">OC Aprobadas</div></div>
+      <div class="sitem"><div class="sval" style="${(cd.ahorroLineasCerradas||0)<0?'color:var(--red)':'color:var(--green)'}">${cd.lineasCerradas>0?fmtM(cd.ahorroLineasCerradas||0):'—'}</div><div class="slbl">Ahorro (L.Cerradas)</div></div>
+    </div>
+  </div>
+  <div class="sidebar">
+    <div class="acard ${(cd.ahorroLineasCerradas||0)<0?'red':'green'}"><div class="albl">Ahorro (Líneas Cerradas)</div><div class="aval" style="${(cd.ahorroLineasCerradas||0)<0?'color:var(--red)':'color:var(--green)'}">${cd.lineasCerradas>0?fmtM(cd.ahorroLineasCerradas||0):'&mdash;'}</div><div style="font-size:10px;color:var(--gray-400);margin-top:4px">${cd.lineasCerradas} actividades al 100%</div></div>
+    <div class="acard proj-mini"><h4>Proyectos (% Campo)</h4>${mini||'<p style="color:var(--gray-400);font-size:11px">Sin proyectos</p>'}</div>
+  </div></div>`;
+  h+=renderRiskBanner(co);
+  h+=renderPendingPanel(co);
+  h+=renderCoProf(co);
+  h+=renderPermitPanel(co);
+  h+='<div class="acc-wrap">';
+  cd.projects.forEach((p,idx)=>{h+=renderAcc(p,co,idx);});
+  if(!cd.projects.length)h+='<div class="empty"><h3>Sin proyectos</h3></div>';
+  h+='</div>';
+  return h;
+}
+
+function renderCoProf(co){
+  const prof=PROFILES[co];
+  if(!prof||!prof.projects||!Object.keys(prof.projects).length)return '';
+  const rows=Object.entries(prof.projects).map(([pn,pd])=>{
+    const el=ESTATUS_OPTS.find(o=>o.v===pd.estatus)?.l||pd.estatus||'—';
+    const rh=pd.riesgoRetraso
+      ?`<span class="upd-chip risk">⚠️ ${esc(pd.riesgosDesc||'Con riesgos')}</span>`
+      :`<span class="upd-chip ok">✓ Sin riesgos</span>`;
+    // Unit chips
+    const uc=pd.unConstruccion||0,uv=pd.unSinVender||0,ut=pd.unTramite||0,ug=pd.unGarantia||0;
+    const tot=uc+uv+ut+ug;
+    const unitRow=tot>0?`<div class="upd-units">
+      ${uc>0?`<span class="upd-unit-chip uc">🏗 ${uc} Construc.</span>`:''}
+      ${uv>0?`<span class="upd-unit-chip uv">🏠 ${uv} Sin vender</span>`:''}
+      ${ut>0?`<span class="upd-unit-chip ut">📋 ${ut} Trámite</span>`:''}
+      ${ug>0?`<span class="upd-unit-chip ug">✅ ${ug} Garantía</span>`:''}
+      <span style="font-size:11px;color:var(--gray-400)">— ${tot} total</span>
+    </div>`:'';
+    // Photo gallery
+    const fotos=pd.fotos||[];
+    const gallery=fotos.length?`<div class="photo-gallery">${fotos.map(f=>`<img src="${f}" onclick="openLightbox(this.src)" alt="foto">`).join('')}</div>`:'';
+    // Date info
+    const fechas=(pd.fechaInicio||pd.fechaEntregaActual)?
+      `<span class="upd-chip">📅 Inicio: ${pd.fechaInicio||'—'}</span><span class="upd-chip">🏁 Entrega: ${pd.fechaEntregaActual||pd.fechaEntregaOriginal||'—'}</span>`:'' ;
+    return `<div class="upd-proj-row">
+      <div style="flex:1;min-width:180px">
+        <div class="upd-proj-name">${esc(pn)}</div>
+        <div class="upd-chips" style="margin-top:4px">
+          <span class="upd-chip">📊 ${pd.avanceActual||0}%</span>
+          <span class="upd-chip">${esc(el)}</span>
+          ${fechas}${rh}
+        </div>
+        ${unitRow}
+        ${pd.notas?`<div style="font-size:11px;color:var(--gray-600);margin-top:4px;font-style:italic">${esc(pd.notas)}</div>`:''}
+        ${gallery}
+      </div>
+    </div>`;
+  }).join('');
+  const upd=prof.updatedAt?`<span style="margin-left:auto;font-size:10px;font-weight:400;opacity:.7">Actualizado: ${fmtDate(prof.updatedAt)}</span>`:'';
+  return `<div class="upd-panel"><div class="upd-panel-hdr" style="display:flex;align-items:center">✏️ Actualizaciones del Coordinador — ${esc(prof.adminName||'')}${upd}</div>${rows}</div>`;
+}
+
+function renderAcc(proj,co,idx){
+  const sid='ac_'+slug(co)+'_'+idx;
+  const pd=PROFILES[co]&&PROFILES[co].projects&&PROFILES[co].projects[proj.name];
+  const isNeg=(proj.ahorroLineasCerradas||0)<0;
+  let cr='';
+  if(pd){
+    const el=ESTATUS_OPTS.find(o=>o.v===pd.estatus)?.l||'—';
+    const rch=pd.riesgoRetraso?`<span style="background:var(--red-bg);color:var(--red);padding:2px 7px;border-radius:4px;font-size:10px;font-weight:600">⚠️ ${esc(pd.riesgosDesc||'Riesgo')}</span>`:`<span style="background:var(--green-bg);color:var(--green);padding:2px 7px;border-radius:4px;font-size:10px;font-weight:600">✓ Sin riesgos</span>`;
+    const uc2=pd.unConstruccion||0,uv2=pd.unSinVender||0,ut2=pd.unTramite||0,ug2=pd.unGarantia||0;
+    const tot2=uc2+uv2+ut2+ug2;
+    const unitLine=tot2>0?`${uc2>0?`<span class="upd-unit-chip uc" style="font-size:10px">🏗${uc2}</span>`:''}${uv2>0?`<span class="upd-unit-chip uv" style="font-size:10px">🏠${uv2}</span>`:''}${ut2>0?`<span class="upd-unit-chip ut" style="font-size:10px">📋${ut2}</span>`:''}${ug2>0?`<span class="upd-unit-chip ug" style="font-size:10px">✅${ug2}</span>`:''}`:'';
+    cr=`<div class="acc-coord-row" style="flex-wrap:wrap;gap:6px"><span style="font-weight:600;color:var(--gold)">✏️ Coord:</span>
+      <span style="background:var(--gold-bg);padding:2px 7px;border-radius:4px;font-size:10px;font-weight:600;color:var(--gold)">${pd.avanceActual||0}%</span>
+      <span style="font-size:10px;color:var(--gray-700)">${esc(el)}</span>
+      ${pd.fechaInicio?`<span style="font-size:10px;color:var(--gray-600)">▶ ${pd.fechaInicio}</span>`:''}
+      ${pd.fechaEntregaActual?`<span style="font-size:10px;color:var(--gray-600)">🏁 ${pd.fechaEntregaActual}</span>`:''}
+      ${unitLine}${rch}</div>`;
+  }
+  let an=0;
+  const ar=(proj.activities||[]).map(act=>{
+    an++;
+    const tr=(act.tasks||[]).map(t=>`<tr class="tr-task">
+      <td class="num-cell"></td><td>${esc(t.name)}${t.fechaInicio?` <span style="color:var(--gray-400);font-size:9px">(${t.fechaInicio})</span>`:''}</td>
+      <td class="amt">${fmtM(t.presInicial)}</td><td class="amt">${fmtM(t.varOC)}</td><td class="amt">${fmtM(t.presFinal)}</td>
+      <td class="amt">${fmtM(t.ocAprobadas)}</td><td>${t.pctOC>0&&t.pctOC<=2?fmtPct(t.pctOC):'—'}</td><td>${fmtPct(t.pctCampo)}</td>
+      <td class="amt">${fmtM(t.montoCampo)}</td>
+      <td class="amt ${t.ahorro>=0?'pos':'neg'}">${t.ahorro>=0?'+':''}${fmtM(t.ahorro)}</td>
+      <td>${estadoBadge(t.pctCampo)}</td></tr>`).join('');
+    return `<tr class="tr-act">
+      <td class="num-cell">${an}</td><td><strong>${esc(act.name)}</strong></td>
+      <td class="amt">${fmtM(act.presInicial)}</td><td class="amt">${fmtM(act.varOC)}</td><td class="amt">${fmtM(act.presFinal)}</td>
+      <td class="amt">${fmtM(act.ocAprobadas)}</td><td>${act.pctOC>0&&act.pctOC<=2?fmtPct(act.pctOC):'—'}</td><td>${fmtPct(act.pctCampo)}</td>
+      <td class="amt">${fmtM(act.montoCampo)}</td>
+      <td class="amt ${act.ahorro>=0?'pos':'neg'}">${act.ahorro>=0?'+':''}${fmtM(act.ahorro)}</td>
+      <td>${estadoBadge(act.pctCampo)}</td></tr>${tr}`;
+  }).join('');
+  return `<div class="acc-item">
+    <div class="acc-hdr" id="${sid}-hdr" onclick="togAcc('${sid}')">
+      <div class="acc-l"><span class="acc-chv" id="${sid}-chv">▶</span><span class="acc-name">${esc(proj.name)}</span></div>
+      <div class="acc-r">
+        <div class="acc-met"><div class="acc-met-val">${fmtM(proj.presFinal)}</div><div class="acc-met-lbl">Presupuesto</div></div>
+        <div class="acc-met"><div class="acc-met-val">${fmtPct(proj.pctCampo)}</div><div class="acc-met-lbl">% Campo</div></div>
+        <div class="acc-met"><div class="acc-met-val ${isNeg?'neg':'pos'}">${isNeg?'':'+'}${fmtM(proj.ahorro)}</div><div class="acc-met-lbl">Ahorro</div></div>
+        <div class="acc-met"><div class="acc-met-val">${proj.cc||0}/${proj.activities.length}</div><div class="acc-met-lbl">Cerradas</div></div>
+      </div>
+    </div>${cr}
+    <div class="acc-body" id="${sid}-body">
+      <table class="atbl"><thead><tr>
+        <th style="width:28px">#</th><th>Actividad / Tarea</th>
+        <th>Pres.Inicial</th><th>Variación OC</th><th>Pres.Final</th>
+        <th>OC Aprobadas</th><th>% OC</th><th>% Campo</th>
+        <th>Monto Campo</th><th>Ahorro/Sobrec.</th><th>Estado</th>
+      </tr></thead>
+      <tbody>${ar||'<tr><td colspan="11" style="text-align:center;padding:12px;color:var(--gray-400)">Sin actividades</td></tr>'}</tbody>
+      </table>
+    </div>
+  </div>`;
+}
+
+function togAcc(sid){
+  const b=ge(sid+'-body'),c=ge(sid+'-chv'),h=ge(sid+'-hdr');
+  const op=b.classList.contains('open');
+  b.classList.toggle('open',!op);c.classList.toggle('open',!op);h.classList.toggle('open',!op);
+}
+
+// ── UPDATE MODAL ──────────────────────────────────────────────────────────────
+function openModal(co){
+  _modalCo=co;
+  ge('modal-title').textContent='Actualizar Proyectos — '+(COMPANY_SHORT[co]||co);
+  const cd=EXCEL_DATA&&EXCEL_DATA.companies[co];
+  const prof=PROFILES[co]||{};
+  let pns=[];
+  if(cd&&cd.projects.length)pns=cd.projects.map(p=>p.name);
+  else if(prof.projects)pns=Object.keys(prof.projects);
+  let h=`<div class="fg" style="margin-bottom:14px"><label>Nombre del Coordinador</label>
+    <input type="text" id="mod-name" value="${esc(prof.adminName||SESSION.display)}" style="width:100%;padding:8px 10px;border:1.5px solid var(--gray-200);border-radius:4px;font-size:13px;margin-top:4px"></div>`;
+  if(!pns.length)h+='<p style="color:var(--gray-400);font-size:13px">No hay proyectos registrados. Cargue el Gestor de Proyectos primero.</p>';
+  pns.forEach(pn=>{h+=projForm(pn,(prof.projects||{})[pn]||{});});
+  ge('modal-body').innerHTML=h;
+  ge('upd-modal').classList.add('show');
+}
+
+function projForm(pn,pd){
+  const sid='upd_'+slug(pn);
+  const rv=pd.riesgoRetraso?'yes':'no';
+  const opts=ESTATUS_OPTS.map(o=>`<option value="${o.v}"${pd.estatus===o.v?' selected':''}>${o.l}</option>`).join('');
+  // Build existing photo thumbnails
+  const fotos=pd.fotos||[];
+  const thumbs=fotos.map((f,i)=>`<div class="photo-thumb"><img src="${f}" onclick="openLightbox(${JSON.stringify(f)})"><button class="photo-del" onclick="delPhoto('${sid}',${i})" title="Eliminar">✕</button></div>`).join('');
+  return `<div class="pcard" id="${sid}-card">
+    <h4>📐 ${esc(pn)}</h4>
+    <!-- Row 1: Estatus + Avance -->
+    <div class="frow">
+      <div class="fld"><label>Estatus del Proyecto</label><select id="${sid}-est">${opts}</select></div>
+      <div class="fld"><label>% Avance Reportado</label><input type="number" id="${sid}-av" min="0" max="100" step="0.5" value="${pd.avanceActual||0}"></div>
+    </div>
+    <!-- Row 2: Fechas -->
+    <div class="frow">
+      <div class="fld"><label>Fecha de Inicio</label><input type="date" id="${sid}-fi" value="${pd.fechaInicio||''}"></div>
+      <div class="fld"><label>Fecha de Entrega Original</label><input type="date" id="${sid}-fo" value="${pd.fechaEntregaOriginal||''}"></div>
+    </div>
+    <div class="frow">
+      <div class="fld"><label>Fecha de Entrega Actual</label><input type="date" id="${sid}-fa" value="${pd.fechaEntregaActual||''}"></div>
+      <div class="fld"><label>Razón de ajuste de fecha</label><input type="text" id="${sid}-rc" value="${esc(pd.razonCambio||'')}" placeholder="Lluvias, materiales, permisos..."></div>
+    </div>
+    <!-- Row 3: Unidades -->
+    <div style="font-size:10px;font-weight:700;color:var(--gray-600);text-transform:uppercase;letter-spacing:.8px;margin:12px 0 6px">Unidades por Estatus</div>
+    <div class="unit-grid">
+      <div class="unit-box uconstru">
+        <label>🏗 En Construcción</label>
+        <input type="number" id="${sid}-uc" min="0" step="1" value="${pd.unConstruccion||0}" oninput="updUnitTotal('${sid}')">
+      </div>
+      <div class="unit-box usvender">
+        <label>🏠 Sin Vender</label>
+        <input type="number" id="${sid}-uv" min="0" step="1" value="${pd.unSinVender||0}" oninput="updUnitTotal('${sid}')">
+      </div>
+      <div class="unit-box utramite">
+        <label>📋 En Trámite</label>
+        <input type="number" id="${sid}-ut" min="0" step="1" value="${pd.unTramite||0}" oninput="updUnitTotal('${sid}')">
+      </div>
+      <div class="unit-box ugarantia">
+        <label>✅ En Garantía</label>
+        <input type="number" id="${sid}-ug" min="0" step="1" value="${pd.unGarantia||0}" oninput="updUnitTotal('${sid}')">
+      </div>
+    </div>
+    <div class="unit-total">
+      <span style="color:var(--gray-600)">Total de unidades registradas:</span>
+      <span id="${sid}-utot">${(pd.unConstruccion||0)+(pd.unSinVender||0)+(pd.unTramite||0)+(pd.unGarantia||0)}</span>
+    </div>
+    <!-- Row 4: Riesgos -->
+    <div class="frow full"><div class="fld"><label>¿Riesgos de retraso?</label>
+      <div class="risk-tgl">
+        <button type="button" class="rbtn ${rv==='no'?'rno':''}" id="${sid}-rno" onclick="togRisk('${sid}','no')">✓ No</button>
+        <button type="button" class="rbtn ${rv==='yes'?'ryes':''}" id="${sid}-ryes" onclick="togRisk('${sid}','yes')">⚠️ Sí</button>
+      </div></div></div>
+    <div class="frow full" id="${sid}-rrow" style="${rv==='yes'?'':'display:none'}">
+      <div class="fld"><label>Descripción de riesgos</label>
+        <textarea id="${sid}-rd" placeholder="Describa los riesgos...">${esc(pd.riesgosDesc||'')}</textarea></div></div>
+    <!-- Row 5: Notas -->
+    <div class="frow full"><div class="fld"><label>Notas adicionales</label>
+      <textarea id="${sid}-nt" placeholder="Observaciones generales...">${esc(pd.notas||'')}</textarea></div></div>
+    <!-- Row 6: Fotos -->
+    <div style="font-size:10px;font-weight:700;color:var(--gray-600);text-transform:uppercase;letter-spacing:.8px;margin:12px 0 6px">Fotos del Proyecto <span style="font-weight:400;color:var(--gray-400)">(opcional)</span></div>
+    <div class="photo-upload-zone" onclick="ge('${sid}-fi2').click()">
+      <p>📷 Toca para agregar fotos</p>
+      <input type="file" id="${sid}-fi2" accept="image/*" multiple style="display:none" onchange="addPhotos('${sid}',this)">
+      <div class="photo-thumb-grid" id="${sid}-thumbs">${thumbs}</div>
+    </div>
+    <input type="hidden" id="${sid}-rv" value="${rv}">
+    <input type="hidden" id="${sid}-fdat" value="${JSON.stringify(fotos).replace(/"/g,'&quot;')}">
+  </div>`;
+}
+
+function updUnitTotal(sid){
+  const uc=parseInt(ge(sid+'-uc')?.value||0);
+  const uv=parseInt(ge(sid+'-uv')?.value||0);
+  const ut=parseInt(ge(sid+'-ut')?.value||0);
+  const ug=parseInt(ge(sid+'-ug')?.value||0);
+  const tot=ge(sid+'-utot');
+  if(tot)tot.textContent=(uc+uv+ut+ug);
+}
+
+function addPhotos(sid,inp){
+  const files=Array.from(inp.files); inp.value='';
+  if(!files.length)return;
+  let existing=[];
+  try{existing=JSON.parse(ge(sid+'-fdat').value.replace(/&quot;/g,'"'))||[];}catch(e){}
+  let processed=0;
+  files.forEach(file=>{
+    compressPhoto(file,(b64)=>{
+      existing.push(b64);
+      processed++;
+      if(processed===files.length){
+        ge(sid+'-fdat').value=JSON.stringify(existing).replace(/"/g,'&quot;');
+        renderThumbs(sid,existing);
+      }
+    });
+  });
+}
+
+function delPhoto(sid,idx){
+  let fotos=[];
+  try{fotos=JSON.parse(ge(sid+'-fdat').value.replace(/&quot;/g,'"'))||[];}catch(e){}
+  fotos.splice(idx,1);
+  ge(sid+'-fdat').value=JSON.stringify(fotos).replace(/"/g,'&quot;');
+  renderThumbs(sid,fotos);
+}
+
+function renderThumbs(sid,fotos){
+  const grid=ge(sid+'-thumbs'); if(!grid)return;
+  grid.innerHTML=fotos.map((f,i)=>`<div class="photo-thumb"><img src="${f}" onclick="openLightbox(this.src)"><button class="photo-del" onclick="delPhoto('${sid}',${i})" title="Eliminar">✕</button></div>`).join('');
+}
+
+function compressPhoto(file,cb){
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const img=new Image();
+    img.onload=()=>{
+      const MAX=900;
+      let w=img.width,h=img.height;
+      if(w>MAX||h>MAX){if(w>h){h=Math.round(h*MAX/w);w=MAX;}else{w=Math.round(w*MAX/h);h=MAX;}}
+      const canvas=document.createElement('canvas');
+      canvas.width=w; canvas.height=h;
+      canvas.getContext('2d').drawImage(img,0,0,w,h);
+      cb(canvas.toDataURL('image/jpeg',0.72));
+    };
+    img.src=e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function openLightbox(src){
+  ge('lb-img').src=src;
+  ge('photo-lightbox').classList.add('show');
+}
+function closeLightbox(){
+  ge('photo-lightbox').classList.remove('show');
+  ge('lb-img').src='';
+}
+
+function togRisk(sid,val){
+  ge(sid+'-rno').className='rbtn'+(val==='no'?' rno':'');
+  ge(sid+'-ryes').className='rbtn'+(val==='yes'?' ryes':'');
+  ge(sid+'-rrow').style.display=val==='yes'?'':'none';
+  ge(sid+'-rv').value=val;
+}
+
+function saveUpdates(){
+  const co=_modalCo; if(!co)return;
+  const cd=EXCEL_DATA&&EXCEL_DATA.companies[co];
+  const oldProf=(SESSION.role==='asistente'?PENDING_PROFILES[co]:PROFILES[co])||{};
+  const baseProf=PROFILES[co]||{};
+  let pns=[];
+  if(cd&&cd.projects.length)pns=cd.projects.map(p=>p.name);
+  else if(baseProf.projects)pns=Object.keys(baseProf.projects);
+  const admin=ge('mod-name')&&ge('mod-name').value.trim()||SESSION.display;
+  const ups={};
+  pns.forEach(pn=>{
+    const sid='upd_'+slug(pn);
+    const old=(oldProf.projects||{})[pn]||(baseProf.projects||{})[pn]||{};
+    const getV=id=>ge(id)&&ge(id).value||'';
+    const getN=id=>parseInt(ge(id)?.value||0)||0;
+    let fotos=old.fotos||[];
+    try{const fd=ge(sid+'-fdat');if(fd)fotos=JSON.parse(fd.value.replace(/&quot;/g,'"'))||[];}catch(e){}
+    ups[pn]={
+      estatus:getV(sid+'-est')||old.estatus||'sin_iniciar',
+      avanceActual:parseFloat(getV(sid+'-av')||old.avanceActual||0),
+      fechaInicio:getV(sid+'-fi')||old.fechaInicio||'',
+      fechaEntregaOriginal:getV(sid+'-fo')||old.fechaEntregaOriginal||'',
+      fechaEntregaActual:getV(sid+'-fa')||old.fechaEntregaActual||'',
+      razonCambio:getV(sid+'-rc').trim()||old.razonCambio||'',
+      riesgoRetraso:getV(sid+'-rv')==='yes',
+      riesgosDesc:getV(sid+'-rd').trim()||old.riesgosDesc||'',
+      notas:getV(sid+'-nt').trim()||old.notas||'',
+      unConstruccion:getN(sid+'-uc'),
+      unSinVender:getN(sid+'-uv'),
+      unTramite:getN(sid+'-ut'),
+      unGarantia:getN(sid+'-ug'),
+      fotos:fotos,
+      updatedAt:nowISO(),
+    };
+  });
+  if(SESSION.role==='asistente'){
+    // Save to pending — requires gerencia approval
+    PENDING_PROFILES[co]={adminName:admin,submittedAt:nowISO(),submittedBy:SESSION.display,projects:ups};
+    savePending(); closeModal();
+    syncPush(true);  // notify gerencia of pending update
+    const el=ge('tab-co_'+slug(co));if(el)el.innerHTML=renderCo(co);
+    alert('✅ Actualización enviada para revisión.\nUn gerente de proyecto deberá aprobar los cambios antes de que sean visibles.');
+  } else {
+    // Direct save for company coordinators and admin
+    PROFILES[co]={adminName:admin,updatedAt:nowISO(),projects:ups};
+    saveProfiles(); closeModal();
+    syncPush(true);  // auto-sync profile update
+    const el=ge('tab-co_'+slug(co));if(el)el.innerHTML=renderCo(co);
+    const al=ge('tab-apa');if(al)al.innerHTML=renderAPA();
+    alert('Información guardada correctamente.\n'+nowFmt());
+  }
+}
+
+function renderPendingPanel(co){
+  const pend=PENDING_PROFILES[co];
+  const isGer=SESSION.role==='gerencia'||SESSION.role==='admin';
+  const isAsistente=SESSION.role==='asistente'&&SESSION.company===co;
+  if(!pend||!pend.projects)return '';
+  const cnt=Object.keys(pend.projects).length;
+  const byUser=esc(pend.submittedBy||'Asistente');
+  const byDate=fmtDate(pend.submittedAt);
+  if(isGer){
+    const rows=Object.entries(pend.projects).map(([pn,pd])=>{
+      const el=ESTATUS_OPTS.find(o=>o.v===pd.estatus)?.l||pd.estatus||'—';
+      return `<tr><td style="font-weight:500">${esc(pn)}</td><td>${el}</td><td>${pd.avanceActual||0}%</td><td style="color:var(--gray-600)">${pd.notas||'—'}</td></tr>`;
+    }).join('');
+    return `<div class="pend-panel">
+      <div class="pend-hdr"><div><span class="pend-hdr-title">⏳ Actualización Pendiente de Aprobación</span><span class="pend-hdr-sub">Enviado por ${byUser} · ${byDate} · ${cnt} proyecto(s)</span></div>
+        <div class="pend-hdr-actions"><button class="btn-approve" onclick="approvePending('${esc(co).replace(/'/g,'&#39;')}')">✅ Aprobar</button><button class="btn-reject" onclick="rejectPending('${esc(co).replace(/'/g,'&#39;')}')">❌ Rechazar</button></div>
+      </div>
+      <div class="pend-body"><table class="pend-table"><thead><tr><th>Proyecto</th><th>Estatus</th><th>Avance</th><th>Notas</th></tr></thead><tbody>${rows}</tbody></table></div>
+    </div>`;
+  }
+  if(isAsistente){
+    return `<div class="pend-panel pend-own"><div class="pend-hdr"><span class="pend-hdr-title">⏳ Actualización en Revisión</span><span class="pend-hdr-sub">Enviada ${byDate} · pendiente de aprobación por un gerente</span></div></div>`;
+  }
+  return '';
+}
+
+function approvePending(co){
+  const pend=PENDING_PROFILES[co];
+  if(!pend)return;
+  PROFILES[co]={adminName:pend.adminName,updatedAt:nowISO(),approvedAt:nowISO(),approvedBy:SESSION.display,projects:pend.projects};
+  saveProfiles();
+  delete PENDING_PROFILES[co];
+  savePending();
+  syncPush(true);  // auto-sync approved profiles
+  // Refresh tab and nav
+  buildNav();
+  showTab('co_'+slug(co));
+  const al=ge('tab-apa');if(al)al.innerHTML=renderAPA();
+  alert('✅ Actualización aprobada y publicada.');
+}
+
+function rejectPending(co){
+  if(!confirm('¿Rechazar esta actualización? Los cambios se eliminarán.'))return;
+  delete PENDING_PROFILES[co];
+  savePending();
+  syncPush(true);  // auto-sync cleared pending
+  buildNav();
+  showTab('co_'+slug(co));
+  alert('Actualización rechazada.');
+}
+
+function closeModal(){ge('upd-modal').classList.remove('show');_modalCo=null;}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+(function(){
+  const s=loadSess();
+  if(s&&USERS_DB[s.username]){SESSION=s;bootApp();}
+})();
+</script>
+<script>
+if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js').catch(()=>{});});}
+</script>
+
+</body>
+</html>

@@ -3,7 +3,7 @@
 
 [[redirects]]
   from = "/"
-  to = "/index.html"
+  to = "/control-obras.html"
   status = 200
 
 [[headers]]
@@ -14,21 +14,11 @@
     X-Content-Type-Options = "nosniff"
 
 [[headers]]
-  for = "/index.html"
+  for = "/control-obras.html"
   [headers.values]
     Cache-Control = "no-cache"
 
 [[headers]]
-  for = "/obras-proyectos/control-obras.html"
-  [headers.values]
-    Cache-Control = "no-cache"
-
-[[headers]]
-  for = "/vacation-system/vacation_system.html"
-  [headers.values]
-    Cache-Control = "no-cache"
-
-[[headers]]
-  for = "/Obras y Proyectos/sw.js"
+  for = "/sw.js"
   [headers.values]
     Cache-Control = "no-cache"
