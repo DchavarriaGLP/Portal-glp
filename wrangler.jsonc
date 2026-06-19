@@ -1,0 +1,14 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "portal-glp",
+  "compatibility_date": "2026-06-19",
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    "directory": "Portal GLP"
+  },
+  "compatibility_flags": [
+    "nodejs_compat"
+  ]
+}
